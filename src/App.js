@@ -1,13 +1,20 @@
 import React from 'react';
-import UserNavbar from './components/Navbars/UserNavbar'
 import './App.css';
+
+import UserNavbar from './components/Navbar/UserNavbar';
+import Signup from './components/Signup/Signup';
+import Footer from './components/Footer/Footer';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <UserNavbar />
-      <p>Test</p>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <UserNavbar />
+            <Signup />
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
 

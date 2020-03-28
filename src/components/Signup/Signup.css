@@ -1,0 +1,9 @@
+#signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#signup-card {
+    width: 450px;
+}
