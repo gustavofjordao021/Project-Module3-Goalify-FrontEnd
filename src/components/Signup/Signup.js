@@ -5,6 +5,7 @@ import { AuthContext } from '../../context/index';
 import './Signup.css';
 
 import {
+  Alert,
   Button,
   Card,
   CardHeader,
@@ -125,6 +126,7 @@ const Signup = () => {
                           </div>
                         </Col>
                       </Row>
+                      {message && <Alert color="danger">{message}</Alert>}
                       <div className="text-center">
                         <Button className="mt-4" color="primary" type="submit">
                           Create account
