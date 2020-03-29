@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 import AUTH_SERVICE from '../services/AuthService';
@@ -18,7 +17,6 @@ class AuthProvider extends React.Component {
     const {
       target: { name, value }
     } = e;
-
     console.log(name, value);
     this.setState(prevState => ({
       ...prevState,
@@ -33,9 +31,31 @@ class AuthProvider extends React.Component {
     e.preventDefault();
     AUTH_SERVICE.signup(this.state.formSignup)
       .then(responseFromServer => {
-        console.log('res from server: ', responseFromServer);
+        const {
+          data: { user, message }
+        } = responseFromServer;
+
+        this.setState(prevState => ({
+          ...prevState,
+          formSignup: {
+            username: '',
+            email: '',
+            password: ''
+          },
+          currentUser: user,
+          isLoggedIn: true
+        }));
+        alert(`${message}`);
+        this.props.history.push('/home');
       })
-      .catch(err => console.log('Error while signup user: ', err));
+      .catch(err => {
+        if (err.response && err.response.data) {
+          this.setState(prevState => ({
+            ...prevState,
+            message: err.response.data.message
+          }));
+        }
+      });
   };
 
   render() {
