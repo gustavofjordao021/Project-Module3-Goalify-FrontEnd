@@ -10,7 +10,7 @@ class Login extends React.Component {
           <Container>
             <Row className="align-items-center justify-content-xl-between">
               <Col xl="6">
-                <div className="copyright text-center text-xl-left text-muted">
+                <div className="copyright text-center text-xl-left text-muted pl-4">
                   © 2020 Goalify
                 </div>
               </Col>

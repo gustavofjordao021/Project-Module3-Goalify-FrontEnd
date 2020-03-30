@@ -10,6 +10,10 @@ class AuthProvider extends React.Component {
       username: '',
       email: '',
       password: ''
+    },
+    formLogin: {
+      username: '',
+      password: ''
     }
   };
 
@@ -17,7 +21,6 @@ class AuthProvider extends React.Component {
     const {
       target: { name, value }
     } = e;
-    console.log(name, value);
     this.setState(prevState => ({
       ...prevState,
       formSignup: {
@@ -27,9 +30,23 @@ class AuthProvider extends React.Component {
     }));
   };
 
+  handleLoginInput = e => {
+    const {
+      target: { name, value }
+    } = e;
+    console.log(name, value);
+    this.setState(prevState => ({
+      ...prevState,
+      formLogin: {
+        ...prevState.formLogin,
+        [name]: value
+      }
+    }));
+  };
+
   handleSignupSubmit = e => {
     e.preventDefault();
-    AUTH_SERVICE.signup(this.state.formSignup)
+    AUTH_SERVICE.login(this.state.formSignup)
       .then(responseFromServer => {
         const {
           data: { user, message }
@@ -58,15 +75,47 @@ class AuthProvider extends React.Component {
       });
   };
 
+  handleLoginSubmit = e => {
+    e.preventDefault();
+    AUTH_SERVICE.login(this.state.formLogin)
+      .then(responseFromServer => {
+        const {
+          data: { user, message }
+        } = responseFromServer;
+
+        this.setState(prevState => ({
+          ...prevState,
+          formSignup: {
+            username: '',
+            password: ''
+          },
+          currentUser: user,
+          isLoggedIn: true
+        }));
+        alert(`${message}`);
+        this.props.history.push('/home');
+      })
+      .catch(err => {
+        if (err.response && err.response.data) {
+          this.setState(prevState => ({
+            ...prevState,
+            message: err.response.data.message
+          }));
+        }
+      });
+  };
+
   render() {
-    const { state, handleSignupInput, handleSignupSubmit } = this;
+    const { state, handleSignupInput, handleSignupSubmit, handleLoginInput, handleLoginSubmit } = this;
     return (
       <>
         <AuthContext.Provider
           value={{
             state,
             handleSignupInput,
-            handleSignupSubmit
+            handleSignupSubmit,
+            handleLoginInput,
+            handleLoginSubmit
           }}
         >
           {this.props.children}

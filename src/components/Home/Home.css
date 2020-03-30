@@ -1,0 +1,18 @@
+.home-container {
+    height: 70vh;
+    display: flex!important;
+    justify-content: center!important;
+    align-items: center!important;
+}
+
+#hero-image {
+    width: 500px;
+}
+
+#hero-title {
+    font-size: 32px;
+}
+
+#main-cta {
+    font-size: 18px;
+}
