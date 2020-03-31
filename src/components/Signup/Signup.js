@@ -27,7 +27,8 @@ const Signup = () => {
         {context => {
           const {
             formSignup: { username, email, password },
-            message,
+            errorMessage,
+            successMessage,
             isLoggedIn
           } = context.state;
 
@@ -126,7 +127,7 @@ const Signup = () => {
                           </div>
                         </Col>
                       </Row>
-                      {message && <Alert color="danger">{message}</Alert>}
+                      {errorMessage ? <Alert color="danger">{errorMessage}</Alert> : successMessage ? <Alert color="success">{successMessage}</Alert> : <span></span>}
                       <div className="text-center">
                         <Button className="mt-4" color="primary" type="submit">
                           Create account

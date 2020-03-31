@@ -14,7 +14,7 @@ const AUTH_SERVICE = {
   },
 
   login(userData) {
-    return service.post('/auth/login', userData);
+     return service.post('/auth/login', userData);
   },
 
   logout() {

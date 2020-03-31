@@ -14,7 +14,9 @@ class AuthProvider extends React.Component {
     formLogin: {
       username: '',
       password: ''
-    }
+    },
+    errorMessage: '',
+    successMessage: ''
   };
 
   handleSignupInput = e => {
@@ -34,7 +36,6 @@ class AuthProvider extends React.Component {
     const {
       target: { name, value }
     } = e;
-    console.log(name, value);
     this.setState(prevState => ({
       ...prevState,
       formLogin: {
@@ -46,10 +47,10 @@ class AuthProvider extends React.Component {
 
   handleSignupSubmit = e => {
     e.preventDefault();
-    AUTH_SERVICE.login(this.state.formSignup)
+    AUTH_SERVICE.signup(this.state.formSignup)
       .then(responseFromServer => {
         const {
-          data: { user, message }
+          data: { user }
         } = responseFromServer;
 
         this.setState(prevState => ({
@@ -62,7 +63,6 @@ class AuthProvider extends React.Component {
           currentUser: user,
           isLoggedIn: true
         }));
-        alert(`${message}`);
         this.props.history.push('/home');
       })
       .catch(err => {
@@ -80,20 +80,29 @@ class AuthProvider extends React.Component {
     AUTH_SERVICE.login(this.state.formLogin)
       .then(responseFromServer => {
         const {
-          data: { user, message }
+          data: { user, errorMessage, successMessage }
         } = responseFromServer;
-
-        this.setState(prevState => ({
-          ...prevState,
-          formSignup: {
-            username: '',
-            password: ''
-          },
-          currentUser: user,
-          isLoggedIn: true
-        }));
-        alert(`${message}`);
-        this.props.history.push('/home');
+        if(errorMessage) {
+          this.setState(prevState => ({
+            ...prevState,
+            formLogin: {
+              username: prevState.formLogin.username,
+              password: ''
+            }, errorMessage
+          }));
+        } else {
+          this.setState(prevState => ({
+            ...prevState,
+            formLogin: {
+              username: '',
+              password: ''
+            }, 
+            successMessage,
+            currentUser: user,
+            isLoggedIn: true
+          }));
+          this.props.history.push('/home');
+      }
       })
       .catch(err => {
         if (err.response && err.response.data) {

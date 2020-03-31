@@ -5,18 +5,10 @@ import { AuthContext } from '../../context/index';
 import './Home.css';
 
 import {
-  Alert,
   Button,
   Card,
-  CardHeader,
   CardBody,
   Container,
-  FormGroup,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
   Row,
   Col
 } from "reactstrap";
@@ -40,7 +32,7 @@ const Home = () => {
                     <CardBody>
                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Velit laoreet id donec ultrices tincidunt. Mattis enim ut tellus elementum sagittis vitae et.</p>
                       <Link to="/signup"><Button className="mt-2 mr-2 mb-2" color="primary"><span id="main-cta" className="m-4">Start for free</span></Button></Link>
-                      <Link to="/signup"><Button className="mt-2 mr-2 mb-2" color="link"><span id="main-cta" className="m-4">Login now</span></Button></Link>                
+                      <Link to="/login"><Button className="mt-2 mr-2 mb-2" color="link"><span id="main-cta" className="m-4">Login now</span></Button></Link>                
                     </CardBody>
                   </Card>
                 </Col>
