@@ -4,6 +4,7 @@
     justify-content: center!important;
     align-items: center!important;
     flex-wrap: wrap;
+    flex-grow: 1;
 }
 
 #hero-image {
