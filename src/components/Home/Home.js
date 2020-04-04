@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect, Link } from 'react-router-dom';
 import { AuthContext } from '../../context/index';
+import UserNavbar from '../Navbar/UserNavbar';
 
 import './Home.css';
 
@@ -21,9 +22,12 @@ const Home = () => {
           return (
             <>
             {isLoggedIn ? (
-              <Redirect to='/' />
+              <Redirect to='/app' />
             ) : (
             <>
+            <header>
+              <UserNavbar />
+            </header>
             <Container className="home-container">
               <Row>
                 <Col className="mt-4 ml-3 mr-4 mb-4">

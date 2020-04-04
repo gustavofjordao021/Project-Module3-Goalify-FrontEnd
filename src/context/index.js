@@ -48,11 +48,20 @@ class AuthProvider extends React.Component {
   handleSignupSubmit = e => {
     e.preventDefault();
     AUTH_SERVICE.signup(this.state.formSignup)
-      .then(responseFromServer => {
-        const {
-          data: { user }
-        } = responseFromServer;
-
+    .then(responseFromServer => {
+      const {
+        data: { user, errorMessage, successMessage }
+      } = responseFromServer;
+        if (errorMessage) {
+          this.setState(prevState => ({
+            ...prevState,
+            formLogin: {
+              username: prevState.formSignup.username,
+              email: prevState.formSignup.email,
+              password: ''
+            }, errorMessage
+          }));
+        } else {
         this.setState(prevState => ({
           ...prevState,
           formSignup: {
@@ -60,11 +69,12 @@ class AuthProvider extends React.Component {
             email: '',
             password: ''
           },
+          successMessage,
           currentUser: user,
           isLoggedIn: true
         }));
-        this.props.history.push('/home');
-      })
+        this.props.history.push('/app');
+      }})
       .catch(err => {
         if (err.response && err.response.data) {
           this.setState(prevState => ({
@@ -101,7 +111,7 @@ class AuthProvider extends React.Component {
             currentUser: user,
             isLoggedIn: true
           }));
-          this.props.history.push('/home');
+          this.props.history.push('/app');
       }
       })
       .catch(err => {

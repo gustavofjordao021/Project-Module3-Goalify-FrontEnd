@@ -36,7 +36,7 @@ const Login = () => {
           return (
             <>
             {isLoggedIn ? (
-              <Redirect to='/' />
+              <Redirect to='/app' />
             ) : (
             <>
             <Container id="signup-container">
