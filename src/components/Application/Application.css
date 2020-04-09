@@ -1,0 +1,18 @@
+.app-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 75vh;
+}
+
+.fixed-height {
+    height: 75vh;
+}
+
+.title {
+    color: #5e72e4;
+}
+
+#icon {
+    width: 30px;
+}

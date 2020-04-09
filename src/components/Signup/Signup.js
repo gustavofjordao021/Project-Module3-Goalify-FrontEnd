@@ -2,6 +2,8 @@ import React from "react";
 import { Redirect } from 'react-router-dom';
 import { AuthContext } from '../../context/index';
 
+import UserNavbar from '../Navbar/UserNavbar';
+
 import './Signup.css';
 
 import {
@@ -39,6 +41,7 @@ const Signup = () => {
               <Redirect to='/app' />
             ) : (
             <>
+            <UserNavbar/>
             <Container id="signup-container">
                 <Card id="signup-card" className="bg-secondary shadow border-0 ">
                   <CardHeader className="bg-transparent brand-logo">

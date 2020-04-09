@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from '../../context/index';
-import './Application.css'
 
+import './Application.css'
 
 import {
   UncontrolledCollapse,
@@ -16,7 +16,12 @@ import {
   Nav,
   Container,
   Row,
-  Col
+  Col,
+  Alert,
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
 } from "reactstrap";
 
 const Application = () => {
@@ -27,7 +32,8 @@ const Application = () => {
             currentUser
           } = context.state;
 
-          return ( 
+          return (
+            <> 
             <Navbar
             className="navbar-horizontal navbar-dark bg-primary"
             expand="lg"
@@ -128,6 +134,28 @@ const Application = () => {
                 </UncontrolledCollapse>
             </Container>
             </Navbar>
+            <Row className="app-container">
+                <Col className="col-3 mt-4 ml-4 fixed-height">
+                    <Card className="fixed-height bg-secondary shadow">
+                    <CardHeader className="p-1">
+                        <Row className="align-items-center">
+                            <Col>
+                                <Button color="link" id="toggler"><h2 className="mb-0 title">Goals</h2></Button>
+                                <img className="ml-9" id="icon" src={require("../../assets/img/icons/noun_go down_1921096 copy.png")}/>
+                            </Col>
+                        </Row>
+                    </CardHeader>
+                    <UncontrolledCollapse toggler="#toggler">
+                        <Link to="/login"><Button className="mt-2 mr-2 mb-2" color="link"><span id="main-cta" className="m-4">🎯 Login now</span></Button></Link>
+                    </UncontrolledCollapse>      
+                    </Card>
+                </Col>
+                <Col className="col-8 mt-4 mr-4">
+                    <Card className="fixed-height shadow">    
+                    </Card>
+                </Col>
+            </Row>
+            </>
             );
         }}
         </AuthContext.Consumer>
