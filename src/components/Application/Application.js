@@ -141,13 +141,17 @@ const Application = () => {
                         <Row className="align-items-center">
                             <Col>
                                 <Button color="link" id="toggler"><h2 className="mb-0 title">Goals</h2></Button>
-                                <img className="ml-9" id="icon" src={require("../../assets/img/icons/noun_go down_1921096 copy.png")}/>
+                                <i className="ni ni-bold-down"></i>
                             </Col>
                         </Row>
                     </CardHeader>
                     <UncontrolledCollapse toggler="#toggler">
                         <Link to="/login"><Button className="mt-2 mr-2 mb-2" color="link"><span id="main-cta" className="m-4">🎯 Login now</span></Button></Link>
-                    </UncontrolledCollapse>      
+                    </UncontrolledCollapse>
+                    <div className="center-container">
+                        <div className="full-width ml-3 mr-3"><hr className="ml-3 mr-3 mb-3"/></div>
+                        <Link to="/login"><Button color="primary" className="align-items-center"><i className="ni ni-fat-add"></i><span id="main-cta">Add New Goal</span></Button></Link>
+                    </div>
                     </Card>
                 </Col>
                 <Col className="col-8 mt-4 mr-4">
