@@ -15,6 +15,7 @@ class AuthProvider extends React.Component {
       username: '',
       password: ''
     },
+    currentUser: '',
     errorMessage: '',
     successMessage: ''
   };

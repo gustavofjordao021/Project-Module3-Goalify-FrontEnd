@@ -21,6 +21,13 @@
     flex-wrap: wrap;
 }
 
+.toggling-button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
 .full-width {
     width: 100%;
 }
