@@ -17,7 +17,8 @@ class AuthProvider extends React.Component {
     },
     currentUser: '',
     errorMessage: '',
-    successMessage: ''
+    successMessage: '',
+    isLoggedIn: false
   };
 
   handleSignupInput = e => {

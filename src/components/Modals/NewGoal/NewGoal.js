@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
+
+import { AuthContext } from '../../../context/index';
+
+import './NewGoal.css'
 
 import {
     Alert,
@@ -45,14 +50,22 @@ import {
     }
 
     render() {
-        const {goalName, goalDescription, goalDueDate, goalTarget} = this.state;
+        const {goalName, goalDescription, goalDueDate} = this.state;
+        return (
+        <AuthContext.Consumer>
+          {context => {
+            const {
+              currentUser,
+            } = context.state;
+
         if (this.props.isShown) {
             return (
                 <>
-                    <Card id="signup-card" className="bg-secondary shadow border-0 ">
+                  <Card id="new-goal-form" className="bg-secondary shadow border-0 ">
                   <CardHeader className="bg-transparent brand-logo">
-                    <div className="text-center text-muted mb-4">
-                      <p>Add new goal</p>
+                    <div className="text-center">
+                      <h2>Add new goal</h2>
+                      <p className="mb-0">To create your new goal, please input it's name, a description that will help you focus on it, a target value (could be X books read, or % change in body weight), and a due date to make sure you follow-through.</p>
                     </div>
                   </CardHeader>
                   <CardBody className="px-lg-5 py-lg-5">
@@ -71,7 +84,7 @@ import {
                       </FormGroup>
                       <FormGroup>
                         <InputGroup className="input-group-alternative">
-                          <Input 
+                          <Input  
                             id='goalDescription'
                             name='goalDescription'
                             type='text'
@@ -98,28 +111,41 @@ import {
                             id='goalTarget'
                             name='goalTarget'
                             type='number'
-                            value={goalTarget}
                             onChange={this.onChangeHandler} 
                           />
                         </InputGroup>
                       </FormGroup>
-                      {errorMessage ? <Alert color="danger">{errorMessage}</Alert> : successMessage ? <Alert color="success">{successMessage}</Alert> : <span></span>} 
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative">
+                          <Input 
+                            id='goalOwner'
+                            name='goalOwner'
+                            type='hidden'
+                            value={currentUser._id}
+                            onChange={this.onChangeHandler} 
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      {/* {errorMessage ? <Alert color="danger">{errorMessage}</Alert> : successMessage ? <Alert color="success">{successMessage}</Alert> : <span></span>}  */}
                       <div className="text-center">
-                        <Button className="mt-4" color="primary" type="submit">
-                          Login
+                        <Button className="mt-2 ml-2 mb-2" color="primary" type="submit">
+                          Add new goal
                         </Button>
+                        <Link to="/login"><Button className="mt-2 mr-2 mb-2 cancel-link" color="secondary"><span className="m-4">Cancel</span></Button></Link>
                       </div>
                     </Form>
                   </CardBody>
                 </Card>
                 </>
-            );  
+            )  
         } else {
             return (
-                <span />
+              <span />
             )
         }
-    };
+      }}
+      </AuthContext.Consumer>
+    )}
 };
   
   export default newGoalForm;

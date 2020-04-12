@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Router, Switch, Link } from "react-router-dom";
+import { Redirect, Router, Switch, Link } from "react-router-dom";
 import { AuthContext } from '../../context/index';
 
 import NewGoal from '../Modals/NewGoal/NewGoal';
@@ -42,17 +42,21 @@ class Application extends Component {
             <AuthContext.Consumer>
                 {context => {
                 const {
-                    currentUser
+                    currentUser,
+                    isLoggedIn
                 } = context.state;
 
-            return (
-                <> 
-                <Navbar
-                className="navbar-horizontal navbar-dark bg-primary"
-                expand="lg"
-                >
-                <Container>
-                {console.log(context, this.state)}
+                return (
+                <>
+                {!isLoggedIn ? (
+                    <Redirect to='/login' />
+                    ) : (
+                    <> 
+                    <Navbar
+                    className="navbar-horizontal navbar-dark bg-primary"
+                    expand="lg"
+                    >
+                    <Container>
                     <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
                     Primary Color
                     </NavbarBrand>
@@ -169,16 +173,17 @@ class Application extends Component {
                     </Col>
                     <Col className="col-8 mt-4 mr-4">
                         <Card className="fixed-height shadow">    
-                        <NewGoal/>
+                            <NewGoal isShown={this.state.newGoalForm} />
                         </Card>
                     </Col>
-                </Row>
-                </>
-                );
-            }}
+                    </Row>
+                    </>
+                    )}
+                    </>
+                )                              
+                }}
             </AuthContext.Consumer>
-        )
-    }
-};
+        )}
+}
 
 export default Application;
