@@ -15,7 +15,7 @@ function App() {
   let context = React.useContext(AuthContext)
   
   React.useEffect(() => {
-    context.isLoggedIn()
+    context.isUserLoggedIn()
   }, [])
 
   return (

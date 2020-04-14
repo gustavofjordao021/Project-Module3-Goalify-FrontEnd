@@ -22,12 +22,20 @@ class AuthProvider extends React.Component {
     isLoggedIn: this.currentUser === '' ? false : this.currentUser === undefined ? false : true
   };
 
-  isLoggedIn = async () => {
+  isUserLoggedIn = async () => {
     const user = await AUTH_SERVICE.getUser();
-    this.setState(prevState => ({
-      ...prevState,
-      currentUser: user?.data?.user,
-    }))
+    if (user.data.user) {
+      this.setState(prevState => ({
+        ...prevState,
+        currentUser: user?.data?.user,
+        isLoggedIn: true
+      }))
+    } else {
+      this.setState(prevState => ({
+        ...prevState,
+        isLoggedIn: false
+      }))
+    }
   }
 
   handleSignupInput = e => {
@@ -145,7 +153,7 @@ class AuthProvider extends React.Component {
   }
 
   render() {
-    const { state, handleSignupInput, handleSignupSubmit, handleLoginInput, handleLoginSubmit, isLoggedIn, userLogOut } = this;
+    const { state, handleSignupInput, handleSignupSubmit, handleLoginInput, handleLoginSubmit, isUserLoggedIn, userLogOut } = this;
     return (
       <>
         <AuthContext.Provider
@@ -155,7 +163,7 @@ class AuthProvider extends React.Component {
             handleSignupSubmit,
             handleLoginInput,
             handleLoginSubmit,
-            isLoggedIn,
+            isUserLoggedIn,
             userLogOut
           }}
         >
