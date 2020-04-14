@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect } from 'react-router-dom';
 import { AuthContext } from '../../context/index';
 
-import UserNavbar from '../Navbar/UserNavbar';
+import UserNavbar from '../Navbar/HomeNavBar/HomeNavBar';
 
 import './Signup.css';
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Link } from 'react-router-dom';
 import { AuthContext } from '../../context/index';
-import UserNavbar from '../Navbar/UserNavbar';
+import HomeNavBar from '../Navbar/HomeNavBar/HomeNavBar';
 
 import './Home.css';
 
@@ -26,7 +26,7 @@ const Home = () => {
             ) : (
             <>
             <header>
-              <UserNavbar />
+              <HomeNavBar />
             </header>
             <Container className="home-container">
               <Row>

@@ -8,8 +8,16 @@ import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Footer from './components/Footer/Footer';
 import Application from './components/Application/Application';
+import { AuthContext } from './context';
+
 
 function App() {
+  let context = React.useContext(AuthContext)
+  
+  React.useEffect(() => {
+    context.isLoggedIn()
+  }, [])
+
   return (
     <div className="App">
     <Switch>

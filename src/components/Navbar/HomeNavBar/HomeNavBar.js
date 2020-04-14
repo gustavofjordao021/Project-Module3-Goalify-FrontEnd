@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import './UserNavbar.css'
+import './HomeNavBar.css'
 
 import {
   Button,
@@ -15,7 +15,7 @@ import {
   Col
 } from "reactstrap";
 
-const UserNavbar = () => {
+const HomeNavBar = () => {
     return (
       <>
         <Navbar
@@ -24,7 +24,7 @@ const UserNavbar = () => {
         >
           <Container className="px-4">
             <NavbarBrand to="/" tag={Link}>
-              <img id="brand-logo" alt="brand-logo" src={require("../../assets/img/brand/logo-goalify.svg")} />
+              <img id="brand-logo" alt="brand-logo" src={require("../../../assets/img/brand/logo-goalify.svg")} />
             </NavbarBrand>
             <button className="navbar-toggler" id="navbar-collapse-main">
               <span className="navbar-toggler-icon" />
@@ -36,7 +36,7 @@ const UserNavbar = () => {
                     <Link to="/">
                       <img
                         alt="..."
-                        src={require("../../assets/img/brand/logo-goalify.svg")}
+                        src={require("../../../assets/img/brand/logo-goalify.svg")}
                       />
                     </Link>
                   </Col>
@@ -79,4 +79,4 @@ const UserNavbar = () => {
     );
   }
 
-export default UserNavbar;
+export default HomeNavBar;

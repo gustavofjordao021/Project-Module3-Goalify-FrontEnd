@@ -2,6 +2,7 @@ import React from 'react';
 
 import AUTH_SERVICE from '../services/AuthService';
 
+
 export const AuthContext = React.createContext();
 
 class AuthProvider extends React.Component {
@@ -18,8 +19,16 @@ class AuthProvider extends React.Component {
     currentUser: '',
     errorMessage: '',
     successMessage: '',
-    isLoggedIn: false
+    isLoggedIn: this.currentUser === '' ? false : this.currentUser === undefined ? false : true
   };
+
+  isLoggedIn = async () => {
+    const user = await AUTH_SERVICE.getUser();
+    this.setState(prevState => ({
+      ...prevState,
+      currentUser: user?.data?.user,
+    }))
+  }
 
   handleSignupInput = e => {
     const {
@@ -126,8 +135,17 @@ class AuthProvider extends React.Component {
       });
   };
 
+  userLogOut = async () => {
+    await AUTH_SERVICE.logout()
+    this.setState(prevState => ({
+      ...prevState, 
+      successMessage: '',
+      currentUser: '',
+      isLoggedIn: false}))
+  }
+
   render() {
-    const { state, handleSignupInput, handleSignupSubmit, handleLoginInput, handleLoginSubmit } = this;
+    const { state, handleSignupInput, handleSignupSubmit, handleLoginInput, handleLoginSubmit, isLoggedIn, userLogOut } = this;
     return (
       <>
         <AuthContext.Provider
@@ -136,7 +154,9 @@ class AuthProvider extends React.Component {
             handleSignupInput,
             handleSignupSubmit,
             handleLoginInput,
-            handleLoginSubmit
+            handleLoginSubmit,
+            isLoggedIn,
+            userLogOut
           }}
         >
           {this.props.children}
