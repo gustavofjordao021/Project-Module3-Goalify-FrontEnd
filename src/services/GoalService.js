@@ -8,22 +8,21 @@ const service = axios.create({
 });
 
 const GOAL_SERVICE = {
-  newGoal(userData) {
-    console.log('user data in the service: ', userData);
-    return service.post('/auth/signup', userData);
+  newGoal(newGoalData) {
+    return service.post('/app/create-goal', newGoalData);
   },
 
-  login(userData) {
-     return service.post('/auth/login', userData);
-  },
+  // login(userData) {
+  //    return service.post('/auth/login', userData);
+  // },
 
-  logout() {
-    return service.post('/auth/logout', {});
-  },
+  // logout() {
+  //   return service.post('/auth/logout', {});
+  // },
 
-  getUser() {
-    return service.get('/auth/isLoggedIn');
-  }
+  // getUser() {
+  //   return service.get('/auth/isLoggedIn');
+  // }
 };
 
 export default GOAL_SERVICE;

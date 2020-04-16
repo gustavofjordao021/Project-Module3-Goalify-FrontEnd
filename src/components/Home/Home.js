@@ -20,7 +20,6 @@ class Home extends Component {
         <AuthContext.Consumer>
           {context => {
             const {isLoggedIn} = context.state;
-            console.log(context.state.currentUser)
             return (
               <>
               {isLoggedIn ? (

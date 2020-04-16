@@ -30,7 +30,7 @@ import {
 
 class Application extends Component {
     state = {
-        newGoalForm: false
+        newGoalForm: false,
     }
 
     toggleGoalForm() {
@@ -66,7 +66,10 @@ class Application extends Component {
                             </Row>
                         </CardHeader>
                         <UncontrolledCollapse toggler="#toggler">
-                            <Link to="/login"><Button className="mt-2 mr-2 mb-2" color="link"><span id="main-cta" className="m-4">🎯 Goal 1</span></Button></Link>
+                        {/* {currentUser.goals.map((goal) => {
+                            const {goalName} = goal
+                            return (<Link to="/login"><Button className="mt-2 mr-2 mb-2" color="link"><span id="main-cta" className="m-4">🎯 {goalName}</span></Button></Link>)
+                        })}                     */}
                         </UncontrolledCollapse>
                         <div className="center-container">
                             <div className="full-width ml-3 mr-3"><hr className="ml-3 mr-3 mb-3 mt-2"/></div>

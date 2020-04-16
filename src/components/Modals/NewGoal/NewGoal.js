@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 
 import { AuthContext } from '../../../context/index';
+import GOAL_SERVICE from '../../../services/GoalService';
 
 import './NewGoal.css'
 
@@ -27,36 +28,65 @@ import {
     "goalDescription": '',
     "goalDueDate": 0,
     "goalTarget": 0,
-    "goalOwner": ''
   }
   
   class newGoalForm extends Component {
     state = {
-       ...DEFAULT_STATE
+       ...DEFAULT_STATE,
+       errorMessage: '',
+       successMessage: ''
     }
 
     onChangeHandler = event => {
         const { name, value } = event.target;
         this.setState(
-            { [name]: value },
+            { [name]: value},            
             () => console.log(this.state)
         );
     };
 
-    handleFormSubmit = event => {
-        event.preventDefault();
-        this.context.passedDownAddFood(this.state);
-        this.setState({...DEFAULT_STATE});
-    }
+    handleNewGoalSubmit = (e, user) => {
+      e.preventDefault();
+      GOAL_SERVICE.newGoal({
+        ...this.state,
+        goalOwner: user._id
+      })
+      .then(responseFromServer => {
+        const {
+          data: { errorMessage, successMessage }
+        } = responseFromServer;
+          if (errorMessage) {
+            this.setState({   
+              ...DEFAULT_STATE,
+              errorMessage
+            });
+          } else {
+            this.setState({
+              ...DEFAULT_STATE,
+              successMessage
+            });
+          }})
+        .catch(err => {
+          if (err.response && err.response.data) {
+            this.setState(prevState => ({
+              ...prevState,
+              errorMessage: err.response.data.message
+            }));
+          }
+        });
+    };
 
     render() {
-        const {goalName, goalDescription, goalDueDate} = this.state;
+        const {goalName, goalDescription, goalDueDate, goalTarget} = this.state;
         return (
         <AuthContext.Consumer>
           {context => {
             const {
               currentUser,
+              successMessage,
+              errorMessage
             } = context.state;
+
 
         if (this.props.isShown) {
             return (
@@ -69,7 +99,7 @@ import {
                     </div>
                   </CardHeader>
                   <CardBody className="px-lg-5 py-lg-5">
-                    <Form onSubmit={this.handleFormSubmit}>
+                    <Form onSubmit={(e) => this.handleNewGoalSubmit(e, currentUser)}>
                       <FormGroup>
                         <InputGroup className="input-group-alternative mb-3">
                           <Input 
@@ -111,22 +141,12 @@ import {
                             id='goalTarget'
                             name='goalTarget'
                             type='number'
+                            value={goalTarget}
                             onChange={this.onChangeHandler} 
                           />
                         </InputGroup>
                       </FormGroup>
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative">
-                          <Input 
-                            id='goalOwner'
-                            name='goalOwner'
-                            type='hidden'
-                            value={currentUser._id}
-                            onChange={this.onChangeHandler} 
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      {/* {errorMessage ? <Alert color="danger">{errorMessage}</Alert> : successMessage ? <Alert color="success">{successMessage}</Alert> : <span></span>}  */}
+                      {errorMessage ? <Alert color="danger">{errorMessage}</Alert> : successMessage ? <Alert color="success">{successMessage}</Alert> : <span></span>} 
                       <div className="text-center">
                         <Button className="mt-2 ml-2 mb-2" color="primary" type="submit">
                           Add new goal
