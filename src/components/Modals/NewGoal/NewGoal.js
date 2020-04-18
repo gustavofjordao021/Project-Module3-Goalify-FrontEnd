@@ -35,8 +35,11 @@ class newGoalForm extends Component {
     ...DEFAULT_STATE,
     errorMessage: "",
     successMessage: "",
-    displayForm: this.props.isShown,
   };
+
+  toggleFormOff() {
+    this.props.isDone();
+  }
 
   onChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -169,17 +172,17 @@ class newGoalForm extends Component {
                           className="mt-2 ml-2 mb-2"
                           color="primary"
                           type="submit"
+                          onClick={() => this.toggleFormOff()}
                         >
                           Add new goal
                         </Button>
-                        <Link to="/login">
-                          <Button
-                            className="mt-2 mr-2 mb-2 cancel-link"
-                            color="secondary"
-                          >
-                            <span className="m-4">Cancel</span>
-                          </Button>
-                        </Link>
+                        <Button
+                          className="mt-2 mr-2 mb-2 cancel-link"
+                          color="secondary"
+                          onClick={() => this.toggleFormOff()}
+                        >
+                          <span className="m-4">Cancel</span>
+                        </Button>
                       </div>
                     </Form>
                   </CardBody>

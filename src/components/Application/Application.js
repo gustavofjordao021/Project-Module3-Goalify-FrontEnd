@@ -29,20 +29,21 @@ import {
 
 class Application extends Component {
   state = {
-    newGoalForm: false,
+    isGoalFormVisible: false,
   };
 
-  toggleGoalFormOn() {
-    this.setState({
-      newGoalForm: true,
-    });
-  }
+  toggleGoalFormOn = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      isGoalFormVisible: true,
+    }));
+  };
 
-  toggleGoalFormOff(status) {
+  toggleGoalFormOff = () => {
     this.setState({
-      newGoalForm: status,
+      isGoalFormVisible: false,
     });
-  }
+  };
 
   render() {
     return (
@@ -116,10 +117,8 @@ class Application extends Component {
                     <Col className="col-8 mt-4 mr-4">
                       <Card className="fixed-height shadow">
                         <NewGoal
-                          isShown={this.state.newGoalForm}
-                          isDone={(status) =>
-                            this.state.toggleGoalFormOff(status)
-                          }
+                          isShown={this.state.isGoalFormVisible}
+                          isDone={this.toggleGoalFormOff}
                         />
                       </Card>
                     </Col>
