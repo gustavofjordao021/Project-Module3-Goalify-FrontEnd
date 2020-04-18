@@ -26,6 +26,11 @@ class AuthProvider extends React.Component {
         : true,
   };
 
+  syncUser = (user) => {
+    this.setState({ currentUser: user });
+    return "done";
+  };
+
   isUserLoggedIn = async () => {
     const user = await AUTH_SERVICE.getUser();
     if (user.data.user) {
@@ -34,7 +39,6 @@ class AuthProvider extends React.Component {
         currentUser: user?.data?.user,
         isLoggedIn: true,
       }));
-      console.log(user.data.user);
     } else {
       this.setState((prevState) => ({
         ...prevState,
@@ -171,6 +175,7 @@ class AuthProvider extends React.Component {
       handleLoginInput,
       handleLoginSubmit,
       isUserLoggedIn,
+      syncUser,
       userLogOut,
     } = this;
     return (
@@ -183,6 +188,7 @@ class AuthProvider extends React.Component {
             handleLoginInput,
             handleLoginSubmit,
             isUserLoggedIn,
+            syncUser,
             userLogOut,
           }}
         >

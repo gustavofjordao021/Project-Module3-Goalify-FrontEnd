@@ -35,21 +35,23 @@ class newGoalForm extends Component {
     ...DEFAULT_STATE,
     errorMessage: "",
     successMessage: "",
-    isDone: "",
+    displayForm: this.props.isShown,
   };
 
   onChangeHandler = (event) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value }, () => console.log(this.state));
+    this.setState({ [name]: value });
   };
 
-  handleNewGoalSubmit = (e, user) => {
+  handleNewGoalSubmit = (e, user, cb) => {
     e.preventDefault();
     GOAL_SERVICE.newGoal({
       ...this.state,
       goalOwner: user._id,
     })
       .then((responseFromServer) => {
+        const { currentUser } = responseFromServer.data;
+        cb(currentUser);
         const {
           data: { errorMessage, successMessage },
         } = responseFromServer;
@@ -57,13 +59,13 @@ class newGoalForm extends Component {
           this.setState({
             ...DEFAULT_STATE,
             errorMessage,
-            isDone: false,
+            displayForm: this.props.isShown,
           });
         } else {
           this.setState({
             ...DEFAULT_STATE,
             successMessage,
-            isDone: true,
+            displayForm: false,
           });
           this.props.isDone(this.state.isDone);
         }
@@ -83,13 +85,8 @@ class newGoalForm extends Component {
     return (
       <AuthContext.Consumer>
         {(context) => {
-          const {
-            currentUser,
-            successMessage,
-            errorMessage,
-            isUserLoggedIn,
-          } = context.state;
-
+          const { currentUser, successMessage, errorMessage } = context.state;
+          const { syncUser, userLogOut } = context;
           if (this.props.isShown) {
             return (
               <>
@@ -110,9 +107,8 @@ class newGoalForm extends Component {
                   </CardHeader>
                   <CardBody className="px-lg-5 py-lg-5">
                     <Form
-                      onSubmit={
-                        ((e) => this.handleNewGoalSubmit(e, currentUser),
-                        this.isUserLoggedIn)
+                      onSubmit={(e) =>
+                        this.handleNewGoalSubmit(e, currentUser, syncUser)
                       }
                     >
                       <FormGroup>

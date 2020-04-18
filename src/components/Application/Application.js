@@ -49,7 +49,6 @@ class Application extends Component {
       <AuthContext.Consumer>
         {(context) => {
           const { currentUser, isLoggedIn } = context.state;
-
           return (
             <>
               {!isLoggedIn ? (
@@ -75,19 +74,29 @@ class Application extends Component {
                           </Row>
                         </CardHeader>
                         <UncontrolledCollapse toggler="#toggler">
-                          {currentUser.goals.map((goal) => {
-                            console.log(currentUser);
-                            const { goalName } = goal;
-                            return (
-                              <Link to="/login">
-                                <Button className="mt-2 mr-2 mb-2" color="link">
-                                  <span id="main-cta" className="m-4">
-                                    🎯 {goalName}
-                                  </span>
-                                </Button>
-                              </Link>
-                            );
-                          })}
+                          {currentUser.goals.length > 0 ? (
+                            currentUser.goals.map((goal, index) => {
+                              const { goalName } = goal;
+                              return (
+                                <Link to="/login" key={index}>
+                                  <Button
+                                    className="mt-2 mr-2 mb-2"
+                                    color="link"
+                                  >
+                                    <span id="main-cta" className="m-4">
+                                      🎯 {goalName}
+                                    </span>
+                                  </Button>
+                                </Link>
+                              );
+                            })
+                          ) : (
+                            <>
+                              <div className="text-center text-muted m-4">
+                                <p className="m-0">You have no goals! 😱</p>
+                              </div>
+                            </>
+                          )}
                         </UncontrolledCollapse>
                         <div className="center-container">
                           <div className="full-width ml-3 mr-3">
