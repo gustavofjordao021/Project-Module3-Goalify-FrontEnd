@@ -39,13 +39,9 @@ class Application extends Component {
   }
 
   toggleGoalFormOff(status) {
-    status
-      ? this.setState({
-          newGoalForm: false,
-        })
-      : this.setState({
-          newGoalForm: false,
-        });
+    this.setState({
+      newGoalForm: status,
+    });
   }
 
   render() {
@@ -80,6 +76,7 @@ class Application extends Component {
                         </CardHeader>
                         <UncontrolledCollapse toggler="#toggler">
                           {currentUser.goals.map((goal) => {
+                            console.log(currentUser);
                             const { goalName } = goal;
                             return (
                               <Link to="/login">

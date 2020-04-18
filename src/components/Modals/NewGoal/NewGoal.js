@@ -35,7 +35,7 @@ class newGoalForm extends Component {
     ...DEFAULT_STATE,
     errorMessage: "",
     successMessage: "",
-    isDone: true,
+    isDone: "",
   };
 
   onChangeHandler = (event) => {
@@ -57,13 +57,15 @@ class newGoalForm extends Component {
           this.setState({
             ...DEFAULT_STATE,
             errorMessage,
+            isDone: false,
           });
         } else {
           this.setState({
             ...DEFAULT_STATE,
             successMessage,
+            isDone: true,
           });
-          this.props.isDone();
+          this.props.isDone(this.state.isDone);
         }
       })
       .catch((err) => {
@@ -81,7 +83,12 @@ class newGoalForm extends Component {
     return (
       <AuthContext.Consumer>
         {(context) => {
-          const { currentUser, successMessage, errorMessage } = context.state;
+          const {
+            currentUser,
+            successMessage,
+            errorMessage,
+            isUserLoggedIn,
+          } = context.state;
 
           if (this.props.isShown) {
             return (
@@ -103,7 +110,10 @@ class newGoalForm extends Component {
                   </CardHeader>
                   <CardBody className="px-lg-5 py-lg-5">
                     <Form
-                      onSubmit={(e) => this.handleNewGoalSubmit(e, currentUser)}
+                      onSubmit={
+                        ((e) => this.handleNewGoalSubmit(e, currentUser),
+                        this.isUserLoggedIn)
+                      }
                     >
                       <FormGroup>
                         <InputGroup className="input-group-alternative mb-3">
