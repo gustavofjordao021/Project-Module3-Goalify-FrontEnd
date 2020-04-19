@@ -59,7 +59,7 @@ class Application extends Component {
                   <UserNavBar />
                   <Row className="app-container">
                     <Col className="col-3 mt-4 ml-4 fixed-height">
-                      <Card className="fixed-height bg-secondary shadow">
+                      <Card className="fixed-height bg-secondary shadow column-container">
                         <CardHeader className="p-1">
                           <Row className="align-items-center">
                             <Col>
@@ -74,32 +74,34 @@ class Application extends Component {
                             </Col>
                           </Row>
                         </CardHeader>
-                        <UncontrolledCollapse toggler="#toggler">
-                          {currentUser.goals.length > 0 ? (
-                            currentUser.goals.map((goal, index) => {
-                              const { goalName } = goal;
-                              return (
-                                <Link to="/login" key={index}>
-                                  <Button
-                                    className="mt-2 mr-2 mb-2"
-                                    color="link"
-                                  >
-                                    <span id="main-cta" className="m-4">
-                                      🎯 {goalName}
-                                    </span>
-                                  </Button>
-                                </Link>
-                              );
-                            })
-                          ) : (
-                            <>
-                              <div className="text-center text-muted m-4">
-                                <p className="m-0">You have no goals! 😱</p>
-                              </div>
-                            </>
-                          )}
-                        </UncontrolledCollapse>
-                        <div className="center-container">
+                        <Container className="goal-container">
+                          <UncontrolledCollapse toggler="#toggler">
+                            {currentUser.goals.length > 0 ? (
+                              currentUser.goals.map((goal, index) => {
+                                const { goalName } = goal;
+                                return (
+                                  <Link to="/login" key={index}>
+                                    <Button
+                                      className="mt-2 mr-2 mb-2"
+                                      color="link"
+                                    >
+                                      <span id="main-cta" className="m-4">
+                                        🎯 {goalName}
+                                      </span>
+                                    </Button>
+                                  </Link>
+                                );
+                              })
+                            ) : (
+                              <>
+                                <div className="text-center text-muted m-4">
+                                  <p className="m-0">You have no goals! 😱</p>
+                                </div>
+                              </>
+                            )}
+                          </UncontrolledCollapse>
+                        </Container>
+                        <div className="button-container mb-4">
                           <div className="full-width ml-3 mr-3">
                             <hr className="ml-3 mr-3 mb-3 mt-2" />
                           </div>
@@ -115,11 +117,26 @@ class Application extends Component {
                       </Card>
                     </Col>
                     <Col className="col-8 mt-4 mr-4">
-                      <Card className="fixed-height shadow">
-                        <NewGoal
-                          isShown={this.state.isGoalFormVisible}
-                          isDone={this.toggleGoalFormOff}
-                        />
+                      <Card className="fixed-height bg-secondary shadow app-container">
+                        {this.state.isGoalFormVisible ? (
+                          <NewGoal isDone={this.toggleGoalFormOff} />
+                        ) : (
+                          <>
+                            <span className="text-center m-4">
+                              <p className="text-muted card-text">
+                                Select a goal on the left, or click below to
+                                create a new goal
+                              </p>
+                              <Button
+                                color="secondary"
+                                className="align-items-center title"
+                                onClick={() => this.toggleGoalFormOn()}
+                              >
+                                <span id="main-cta">Add New Goal</span>
+                              </Button>
+                            </span>
+                          </>
+                        )}
                       </Card>
                     </Col>
                   </Row>
