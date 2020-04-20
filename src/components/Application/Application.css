@@ -63,3 +63,7 @@
   width: 25px;
   transform: rotate(90deg);
 }
+
+#secondary-goal-add:hover {
+  color: #5e72e4;
+}

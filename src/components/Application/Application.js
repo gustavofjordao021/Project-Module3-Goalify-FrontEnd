@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Redirect, Router, Switch, Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { AuthContext } from "../../context/index";
 
 import UserNavBar from "../Navbar/UserNavBar/UserNavBar";
-import NewGoal from "../Modals/NewGoal/NewGoal";
+import GoalDetails from "../GoalDetails/GoalDetails";
+import NewGoal from "../NewGoal/NewGoal";
 
 import "./Application.css";
 
@@ -14,11 +15,13 @@ import {
   Col,
   Card,
   CardHeader,
+  Button,
 } from "reactstrap";
 
 class Application extends Component {
   state = {
     isGoalFormVisible: false,
+    isGoalDetailsVisible: false,
   };
 
   toggleGoalFormOn = () => {
@@ -29,9 +32,24 @@ class Application extends Component {
   };
 
   toggleGoalFormOff = () => {
-    this.setState({
+    this.setState((prevState) => ({
+      ...prevState,
       isGoalFormVisible: false,
-    });
+    }));
+  };
+
+  toggleGoalDetailsOn = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      isGoalDetailsVisible: true,
+    }));
+  };
+
+  toggleGoalDetailsOff = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      isGoalDetailsVisible: false,
+    }));
   };
 
   render() {
@@ -67,14 +85,23 @@ class Application extends Component {
                           <UncontrolledCollapse toggler="#toggler">
                             {currentUser.goals.length > 0 ? (
                               currentUser.goals.map((goal, index) => {
-                                const { goalName } = goal;
+                                const { goalName, _id } = goal;
                                 return (
-                                  <Link to="/login" key={index}>
+                                  <Link
+                                    to={`/app/goal-details/${_id}`}
+                                    key={index}
+                                  >
                                     <Button
                                       className="mt-2 mr-2 mb-2"
                                       color="link"
+                                      onClick={() => this.toggleGoalDetailsOn()}
                                     >
-                                      <span id="main-cta" className="m-4">
+                                      <span
+                                        id="main-cta"
+                                        className="m-4"
+                                        role="img"
+                                        aria-label="goal"
+                                      >
                                         🎯 {goalName}
                                       </span>
                                     </Button>
@@ -84,7 +111,12 @@ class Application extends Component {
                             ) : (
                               <>
                                 <div className="text-center text-muted m-4">
-                                  <p className="m-0">You have no goals! 😱</p>
+                                  <p className="m-0">
+                                    You have no goals!{" "}
+                                    <span role="img" aria-label="shocked">
+                                      😱
+                                    </span>
+                                  </p>
                                 </div>
                               </>
                             )}
@@ -109,6 +141,8 @@ class Application extends Component {
                       <Card className="fixed-height bg-secondary shadow app-container">
                         {this.state.isGoalFormVisible ? (
                           <NewGoal isDone={this.toggleGoalFormOff} />
+                        ) : this.state.isGoalDetailsVisible ? (
+                          <GoalDetails isDone={this.toggleGoalDetailsOff} />
                         ) : (
                           <>
                             <span className="text-center m-4">
@@ -117,6 +151,7 @@ class Application extends Component {
                                 create a new goal
                               </p>
                               <Button
+                                id="secondary-goal-add"
                                 color="secondary"
                                 className="align-items-center title"
                                 onClick={() => this.toggleGoalFormOn()}
