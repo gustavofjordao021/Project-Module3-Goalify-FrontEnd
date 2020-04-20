@@ -9,22 +9,11 @@ import "./Application.css";
 
 import {
   UncontrolledCollapse,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  NavbarBrand,
-  Navbar,
-  NavItem,
-  NavLink,
-  Nav,
   Container,
   Row,
   Col,
-  Alert,
-  Button,
   Card,
   CardHeader,
-  CardBody,
 } from "reactstrap";
 
 class Application extends Component {

@@ -1,15 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
 
 const baseURL = process.env.REACT_APP_SERVER_POINT;
 
 const service = axios.create({
   baseURL,
-  withCredentials: true
+  withCredentials: true,
 });
 
 const GOAL_SERVICE = {
   newGoal(newGoalData) {
-    return service.post('/app/create-goal', newGoalData);
+    return service.post("/app/create-goal", newGoalData);
   },
 
   // login(userData) {

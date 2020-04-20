@@ -12,15 +12,12 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Container,
   FormGroup,
   Form,
   Input,
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Row,
-  Col,
 } from "reactstrap";
 
 const DEFAULT_STATE = {
@@ -37,9 +34,9 @@ class newGoalForm extends Component {
     successMessage: "",
   };
 
-  toggleFormOff() {
+  toggleFormOff = () => {
     this.props.isDone();
-  }
+  };
 
   onChangeHandler = (event) => {
     const { name, value } = event.target;
