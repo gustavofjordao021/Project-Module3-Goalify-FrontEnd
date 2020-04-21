@@ -24,6 +24,7 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/app" component={Application} />
+        <Route exact path="/app/goal-details/:goalId" component={Application} />
       </Switch>
       <footer>
         <Footer />
