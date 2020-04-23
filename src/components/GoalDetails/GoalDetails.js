@@ -48,8 +48,9 @@ class GoalDetails extends Component {
     return (
       <AuthContext.Consumer>
         {(context) => {
-          const { currentUser, successMessage, errorMessage } = context.state;
           const { syncUser } = context;
+          const { currentUser, successMessage, errorMessage } = context.state;
+          console.log(currentUser);
           return (
             <>
               <Card
@@ -58,7 +59,7 @@ class GoalDetails extends Component {
               >
                 <CardHeader className="bg-transparent brand-logo">
                   <div className="text-center">
-                    <h2 className="title">Add new goal</h2>
+                    <h2 className="title"></h2>
                     <p className="mb-0 text-muted">
                       To create your new goal, please input it's name, a
                       description that will help you focus on it, a target value

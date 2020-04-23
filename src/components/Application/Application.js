@@ -49,7 +49,7 @@ class Application extends Component {
     return (
       <AuthContext.Consumer>
         {(context) => {
-          const { isLoggedIn } = context.state;
+          const { currentUser, isLoggedIn } = context.state;
           return (
             <>
               {!isLoggedIn ? (
@@ -58,13 +58,19 @@ class Application extends Component {
                 <>
                   <UserNavBar />
                   <Row className="app-container">
-                    <GoalSlider />
+                    <GoalSlider
+                      userLoggedIn={currentUser}
+                      passedDownToggleGoalForm={() => this.toggleGoalFormOn()}
+                    />
                     <Col className="col-8 mt-4 mr-4">
                       <Card className="fixed-height bg-secondary shadow app-container">
                         {this.state.isGoalFormVisible ? (
                           <NewGoal isDone={this.toggleGoalFormOff} />
                         ) : this.state.isGoalDetailsVisible ? (
-                          <GoalDetails isDone={this.toggleGoalDetailsOff} />
+                          <GoalDetails
+                            userLoggedIn={currentUser}
+                            isDone={this.toggleGoalDetailsOff}
+                          />
                         ) : (
                           <>
                             <span className="text-center m-4">
