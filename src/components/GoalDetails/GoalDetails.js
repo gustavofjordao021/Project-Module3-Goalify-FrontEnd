@@ -20,23 +20,35 @@ import {
   InputGroup,
 } from "reactstrap";
 
-const DEFAULT_STATE = {
-  goalName: "",
-  goalDescription: "",
-  goalDueDate: 0,
-  goalTarget: 0,
-};
-
 class GoalDetails extends Component {
   state = {
-    ...DEFAULT_STATE,
+    goalName: "",
+    goalDescription: "",
+    goalDueDate: 0,
+    goalTarget: 0,
     errorMessage: "",
     successMessage: "",
   };
 
-  toggleDetailsOff = () => {
-    this.props.isDone();
-  };
+  componentDidMount() {
+    const { goalId } = this.props.match.params;
+    GOAL_SERVICE.retrieveGoal(goalId)
+      .then((responseFromServer) => {
+        const {
+          goalName,
+          goalDescription,
+          goalDueDate,
+          goalTarget,
+        } = responseFromServer.data;
+        this.setState({
+          goalName,
+          goalDescription,
+          goalDueDate,
+          goalTarget,
+        });
+      })
+      .catch();
+  }
 
   onChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -50,7 +62,6 @@ class GoalDetails extends Component {
         {(context) => {
           const { syncUser } = context;
           const { currentUser, successMessage, errorMessage } = context.state;
-          console.log(currentUser);
           return (
             <>
               <Card
@@ -59,13 +70,8 @@ class GoalDetails extends Component {
               >
                 <CardHeader className="bg-transparent brand-logo">
                   <div className="text-center">
-                    <h2 className="title"></h2>
-                    <p className="mb-0 text-muted">
-                      To create your new goal, please input it's name, a
-                      description that will help you focus on it, a target value
-                      (could be X books read, or % change in body weight), and a
-                      due date to make sure you follow-through.
-                    </p>
+                    <h2 className="title">{goalName}</h2>
+                    <p className="mb-0 text-muted">{goalDescription}</p>
                   </div>
                 </CardHeader>
                 <CardBody className="px-lg-5 py-lg-5"></CardBody>
