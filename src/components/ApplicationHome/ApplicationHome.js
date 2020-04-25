@@ -7,14 +7,13 @@ import GoalDetails from "../GoalDetails/GoalDetails";
 import GoalSlider from "../GoalSlider/GoalSlider";
 import NewGoal from "../NewGoal/NewGoal";
 
-import "./Application.css";
+import "./ApplicationHome.css";
 
 import { Row, Col, Card, Button } from "reactstrap";
 
-class Application extends Component {
+class ApplicationHome extends Component {
   state = {
     isGoalFormVisible: false,
-    isGoalDetailsVisible: false,
   };
 
   toggleGoalFormOn = () => {
@@ -28,20 +27,6 @@ class Application extends Component {
     this.setState((prevState) => ({
       ...prevState,
       isGoalFormVisible: false,
-    }));
-  };
-
-  toggleGoalDetailsOn = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      isGoalDetailsVisible: true,
-    }));
-  };
-
-  toggleGoalDetailsOff = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      isGoalDetailsVisible: false,
     }));
   };
 
@@ -66,11 +51,6 @@ class Application extends Component {
                       <Card className="fixed-height bg-secondary shadow app-container">
                         {this.state.isGoalFormVisible ? (
                           <NewGoal isDone={this.toggleGoalFormOff} />
-                        ) : this.state.isGoalDetailsVisible ? (
-                          <GoalDetails
-                            userLoggedIn={currentUser}
-                            isDone={this.toggleGoalDetailsOff}
-                          />
                         ) : (
                           <>
                             <span className="text-center m-4">
@@ -102,4 +82,4 @@ class Application extends Component {
   }
 }
 
-export default Application;
+export default ApplicationHome;

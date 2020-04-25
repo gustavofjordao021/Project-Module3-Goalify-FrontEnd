@@ -35,11 +35,7 @@ const GoalSlider = (props) => {
                   const { goalName, _id } = goal;
                   return (
                     <Link to={`/app/goal-details/${_id}`} key={index}>
-                      <Button
-                        className="mt-2 mr-2 mb-2"
-                        color="link"
-                        onClick={() => this.toggleGoalDetailsOn()}
-                      >
+                      <Button className="mt-2 mr-2 mb-2" color="link">
                         <span
                           id="main-cta"
                           className="m-4"
