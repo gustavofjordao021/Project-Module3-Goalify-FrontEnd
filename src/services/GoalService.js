@@ -12,8 +12,8 @@ const GOAL_SERVICE = {
     return service.post("/app/create-goal", newGoalData);
   },
 
-  retrieveGoal(goalId) {
-    return service.get(`/app/${goalId}`);
+  retrieveGoals() {
+    return service.get(`/app/all-goals`);
   },
 
   // login(userData) {

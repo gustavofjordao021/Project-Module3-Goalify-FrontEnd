@@ -32,11 +32,11 @@ class AuthProvider extends React.Component {
   };
 
   isUserLoggedIn = async () => {
-    const user = await AUTH_SERVICE.getUser();
-    if (user.data.user) {
+    const userFound = await AUTH_SERVICE.getUser();
+    if (userFound.data.user) {
       this.setState((prevState) => ({
         ...prevState,
-        currentUser: user?.data?.user,
+        currentUser: userFound?.data?.user,
         isLoggedIn: true,
       }));
     } else {
@@ -133,6 +133,7 @@ class AuthProvider extends React.Component {
             errorMessage,
           }));
         } else {
+          console.log("teeeest: ===> ");
           this.setState((prevState) => ({
             ...prevState,
             formLogin: {
@@ -140,10 +141,10 @@ class AuthProvider extends React.Component {
               password: "",
             },
             errorMessage: "",
-            successMessage,
             currentUser: user,
             isLoggedIn: true,
           }));
+          this.isUserLoggedIn();
           this.props.history.push("/app");
         }
       })

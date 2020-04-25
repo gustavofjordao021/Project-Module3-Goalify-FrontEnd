@@ -16,6 +16,8 @@ class ApplicationHome extends Component {
     isGoalFormVisible: false,
   };
 
+  updateGoals = (key) => {};
+
   toggleGoalFormOn = () => {
     this.setState((prevState) => ({
       ...prevState,
@@ -46,6 +48,7 @@ class ApplicationHome extends Component {
                     <GoalSlider
                       userLoggedIn={currentUser}
                       passedDownToggleGoalForm={() => this.toggleGoalFormOn()}
+                      passedDownGoalSelector={(key) => this.updateGoals(key)}
                     />
                     <Col className="col-8 mt-4 mr-4">
                       <Card className="fixed-height bg-secondary shadow app-container">

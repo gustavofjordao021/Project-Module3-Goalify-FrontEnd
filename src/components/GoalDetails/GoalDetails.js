@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 import UserNavBar from "../Navbar/UserNavBar/UserNavBar";
 import GoalSlider from "../GoalSlider/GoalSlider";
@@ -10,21 +9,7 @@ import GOAL_SERVICE from "../../services/GoalService";
 
 import "./GoalDetails.css";
 
-import {
-  Alert,
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  FormGroup,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Row,
-  Col,
-} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 
 class GoalDetails extends Component {
   state = {
@@ -32,30 +17,42 @@ class GoalDetails extends Component {
     goalDescription: "",
     goalDueDate: 0,
     goalTarget: 0,
+    userGoals: [],
     errorMessage: "",
     successMessage: "",
     isGoalFormVisible: false,
   };
 
-  componentDidMount() {
-    const { goalId } = this.props.match.params;
-    GOAL_SERVICE.retrieveGoal(goalId)
+  componentWillMount = () => {
+    GOAL_SERVICE.retrieveGoals()
       .then((responseFromServer) => {
-        const {
-          goalName,
-          goalDescription,
-          goalDueDate,
-          goalTarget,
-        } = responseFromServer.data;
-        this.setState({
-          goalName,
-          goalDescription,
-          goalDueDate,
-          goalTarget,
-        });
+        const goalId = this.props.match.params;
+        let selectedGoal = responseFromServer.data.filter(
+          (eachGoal) => eachGoal._id === goalId.goalId
+        )[0];
+        console.log(selectedGoal);
+        this.setState((prevState) => ({
+          ...prevState,
+          userGoals: responseFromServer.data,
+          goalName: selectedGoal.goalName,
+          goalDescription: selectedGoal.goalDescription,
+          goalDueDate: selectedGoal.goalDueDate,
+          goalTarget: selectedGoal.goalTarget,
+        }));
       })
-      .catch();
-  }
+      .catch((errorMessage) => console.log(errorMessage));
+  };
+
+  updateGoals = (key) => {
+    let goal = this.state.userGoals.filter((goals) => goals._id === key)[0];
+    this.setState((prevState) => ({
+      ...prevState,
+      goalName: goal.goalName,
+      goalDescription: goal.goalDescription,
+      goalDueDate: goal.goalDueDate,
+      goalTarget: goal.goalTarget,
+    }));
+  };
 
   toggleGoalFormOn = () => {
     this.setState((prevState) => ({
@@ -90,6 +87,7 @@ class GoalDetails extends Component {
                 <GoalSlider
                   userLoggedIn={currentUser}
                   passedDownToggleGoalForm={() => this.toggleGoalFormOn()}
+                  passedDownGoalSelector={(key) => this.updateGoals(key)}
                 />
                 <Col className="col-8 mt-4 mr-4">
                   <Card className="fixed-height bg-secondary shadow app-container">

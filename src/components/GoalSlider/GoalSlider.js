@@ -12,7 +12,11 @@ import {
 } from "reactstrap";
 
 const GoalSlider = (props) => {
-  const { userLoggedIn } = props;
+  const {
+    userLoggedIn,
+    passedDownGoalSelector,
+    passedDownToggleGoalForm,
+  } = props;
 
   return (
     <>
@@ -41,6 +45,7 @@ const GoalSlider = (props) => {
                           className="m-4"
                           role="img"
                           aria-label="goal"
+                          onClick={(e) => passedDownGoalSelector(_id)}
                         >
                           🎯 {goalName}
                         </span>
@@ -69,7 +74,7 @@ const GoalSlider = (props) => {
             <Button
               color="primary"
               className="align-items-center"
-              onClick={() => props.passedDownToggleGoalForm()}
+              onClick={() => passedDownToggleGoalForm()}
             >
               <i className="ni ni-fat-add"></i>
               <span id="main-cta">Add New Goal</span>
