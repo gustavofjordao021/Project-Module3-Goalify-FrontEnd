@@ -133,7 +133,6 @@ class AuthProvider extends React.Component {
             errorMessage,
           }));
         } else {
-          console.log("teeeest: ===> ");
           this.setState((prevState) => ({
             ...prevState,
             formLogin: {

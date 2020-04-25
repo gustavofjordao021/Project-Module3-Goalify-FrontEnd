@@ -38,18 +38,20 @@ const GoalSlider = (props) => {
                 userLoggedIn.goals.map((goal, index) => {
                   const { goalName, _id } = goal;
                   return (
-                    <Link to={`/app/goal-details/${_id}`} key={index}>
-                      <Button className="mt-2 mr-2 mb-2" color="link">
-                        <span
-                          id="main-cta"
-                          className="m-4"
-                          role="img"
-                          aria-label="goal"
-                          onClick={(e) => passedDownGoalSelector(_id)}
-                        >
-                          🎯 {goalName}
-                        </span>
-                      </Button>
+                    <Link
+                      to={`/app/goal-details/${_id}`}
+                      key={index}
+                      className="btn btn-link m-1"
+                      onClick={(e) => passedDownGoalSelector(_id)}
+                    >
+                      <span
+                        id="main-cta"
+                        className="m-4"
+                        role="img"
+                        aria-label="goal"
+                      >
+                        🎯 {goalName}
+                      </span>
                     </Link>
                   );
                 })

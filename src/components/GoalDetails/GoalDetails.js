@@ -96,12 +96,18 @@ class GoalDetails extends Component {
                     ) : (
                       <Card
                         id="new-goal-form"
-                        className="bg-secondary shadow border-0 "
+                        className="bg-secondary shadow border-0"
                       >
                         <CardHeader className="bg-transparent brand-logo">
                           <div className="text-center">
                             <h2 className="title">{goalName}</h2>
-                            <p className="mb-0 text-muted">{goalDescription}</p>
+                            <div className="details-container">
+                              <p className="mb-0 text-muted">
+                                {goalDescription}
+                              </p>
+                              <p className="mb-0 text-muted">{goalDueDate}</p>
+                              <p className="mb-0 text-muted">{goalTarget}</p>
+                            </div>
                           </div>
                         </CardHeader>
                         <CardBody className="px-lg-5 py-lg-5"></CardBody>
