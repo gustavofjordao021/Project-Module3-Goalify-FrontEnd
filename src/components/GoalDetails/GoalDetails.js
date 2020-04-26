@@ -30,13 +30,14 @@ class GoalDetails extends Component {
         let selectedGoal = responseFromServer.data.filter(
           (eachGoal) => eachGoal._id === goalId.goalId
         )[0];
-        console.log(selectedGoal);
+        const correctDate = selectedGoal.goalDueDate.substring(0, 9);
+        console.log(correctDate);
         this.setState((prevState) => ({
           ...prevState,
           userGoals: responseFromServer.data,
           goalName: selectedGoal.goalName,
           goalDescription: selectedGoal.goalDescription,
-          goalDueDate: selectedGoal.goalDueDate,
+          goalDueDate: correctDate,
           goalTarget: selectedGoal.goalTarget,
         }));
       })
@@ -74,7 +75,7 @@ class GoalDetails extends Component {
   };
 
   render() {
-    const { goalName, goalDescription, goalDueDate, goalTarget } = this.state;
+    const { goalName, goalDescription, goalTarget, goalDueDate } = this.state;
     return (
       <AuthContext.Consumer>
         {(context) => {
@@ -99,14 +100,32 @@ class GoalDetails extends Component {
                         className="bg-secondary shadow border-0"
                       >
                         <CardHeader className="bg-transparent brand-logo">
-                          <div className="text-center">
+                          <div className="text-center details-container">
                             <h2 className="title">{goalName}</h2>
                             <div className="details-container">
                               <p className="mb-0 text-muted">
                                 {goalDescription}
                               </p>
-                              <p className="mb-0 text-muted">{goalDueDate}</p>
-                              <p className="mb-0 text-muted">{goalTarget}</p>
+                              <p>
+                                Due date{" "}
+                                <span role="img" aria-label="calendar">
+                                  📅
+                                </span>
+                                :
+                                <p className="mb-0 text-muted">{goalDueDate}</p>
+                              </p>
+                              <p>
+                                Target{" "}
+                                <span
+                                  id="main-cta"
+                                  className="m-4"
+                                  role="img"
+                                  aria-label="goal"
+                                >
+                                  🎯
+                                </span>
+                                :<p className="mb-0 text-muted">{goalTarget}</p>
+                              </p>
                             </div>
                           </div>
                         </CardHeader>
