@@ -1,0 +1,10 @@
+.cancel-link {
+    font-size: 0.875rem;
+    font-weight: 800;
+    color: #5e72e4!important;
+}
+
+#new-goal-form {
+    width: 100%;
+    height: 100%;
+}

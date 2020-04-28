@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import UserNavBar from "../Navbar/UserNavBar/UserNavBar";
+import UpdateGoal from "../UpdateGoal/UpdateGoal";
 import GoalSlider from "../GoalSlider/GoalSlider";
 import NewGoal from "../NewGoal/NewGoal";
 
@@ -20,6 +21,7 @@ class GoalDetails extends Component {
     userGoals: [],
     errorMessage: "",
     successMessage: "",
+    toggleGoalDetail: false,
     isGoalFormVisible: false,
   };
 
@@ -31,7 +33,6 @@ class GoalDetails extends Component {
           (eachGoal) => eachGoal._id === goalId.goalId
         )[0];
         const correctDate = selectedGoal.goalDueDate.substring(0, 9);
-        console.log(correctDate);
         this.setState((prevState) => ({
           ...prevState,
           userGoals: responseFromServer.data,
@@ -50,7 +51,7 @@ class GoalDetails extends Component {
       ...prevState,
       goalName: goal.goalName,
       goalDescription: goal.goalDescription,
-      goalDueDate: goal.goalDueDate,
+      goalDueDate: goal.goalDueDate.substring(0, 9),
       goalTarget: goal.goalTarget,
     }));
   };
@@ -69,13 +70,27 @@ class GoalDetails extends Component {
     }));
   };
 
+  toggleGoalDetailsOn = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      toggleGoalDetail: true,
+    }));
+  };
+
+  toggleGoalDetailsOff = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      toggleGoalDetail: false,
+    }));
+  };
+
   onChangeHandler = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
 
   render() {
-    const { goalName, goalDescription, goalTarget, goalDueDate } = this.state;
+    const { goalName, goalTarget, goalDueDate, toggleGoalDetail } = this.state;
     return (
       <AuthContext.Consumer>
         {(context) => {
@@ -100,34 +115,33 @@ class GoalDetails extends Component {
                         className="bg-secondary shadow border-0"
                       >
                         <CardHeader className="bg-transparent brand-logo">
-                          <div className="text-center details-container">
-                            <h2 className="title">{goalName}</h2>
-                            <div className="details-container">
-                              <p className="mb-0 text-muted">
-                                {goalDescription}
-                              </p>
-                              <p>
-                                Due date{" "}
-                                <span role="img" aria-label="calendar">
-                                  📅
-                                </span>
-                                :
-                                <p className="mb-0 text-muted">{goalDueDate}</p>
-                              </p>
-                              <p>
-                                Target{" "}
-                                <span
-                                  id="main-cta"
-                                  className="m-4"
-                                  role="img"
-                                  aria-label="goal"
-                                >
-                                  🎯
-                                </span>
-                                :<p className="mb-0 text-muted">{goalTarget}</p>
-                              </p>
+                          {!toggleGoalDetail ? (
+                            <div className="text-center details-container">
+                              <div className="title-container mb-4">
+                                <h2 className="title mr-3 mb-0">{goalName}</h2>
+                                <i
+                                  className="ni ni-settings mr-3"
+                                  onClick={() => this.toggleGoalDetailsOn()}
+                                ></i>
+                              </div>
+                              <div className="details-container">
+                                <p className="m-0 pt-2 pb-2 pl-4 pr-4">
+                                  <i className="ni ni-calendar-grid-58 mr-3" />{" "}
+                                  {goalDueDate}
+                                </p>
+                                <p className="m-0 pt-2 pb-2 pl-4 pr-4">
+                                  <i className="ni ni-compass-04 mr-3" />{" "}
+                                  {goalTarget}
+                                </p>
+                              </div>
                             </div>
-                          </div>
+                          ) : (
+                            <UpdateGoal
+                              isDone={this.toggleGoalDetailsOff}
+                              goalInfo={this.state}
+                              updateGoalId={this.props.match.params}
+                            />
+                          )}
                         </CardHeader>
                         <CardBody className="px-lg-5 py-lg-5"></CardBody>
                       </Card>

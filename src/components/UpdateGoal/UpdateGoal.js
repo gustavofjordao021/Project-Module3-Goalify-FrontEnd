@@ -3,13 +3,11 @@ import React, { Component } from "react";
 import { AuthContext } from "../../context/index";
 import GOAL_SERVICE from "../../services/GoalService";
 
-import "./NewGoal.css";
+import "./UpdateGoal.css";
 
 import {
   Alert,
   Button,
-  Card,
-  CardHeader,
   CardBody,
   FormGroup,
   Form,
@@ -19,16 +17,13 @@ import {
   InputGroup,
 } from "reactstrap";
 
-const DEFAULT_STATE = {
-  goalName: "",
-  goalDescription: "",
-  goalDueDate: "",
-  goalTarget: "",
-};
-
-class newGoalForm extends Component {
+class UpdateGoal extends Component {
   state = {
-    ...DEFAULT_STATE,
+    goalName: this.props.goalInfo.goalName,
+    goalDueDate: this.props.goalInfo.goalDueDate,
+    goalTarget: this.props.goalInfo.goalTarget,
+    goalId: this.props.updateGoalId.goalId,
+    displayForm: this.props.goalInfo.toggleGoalDetail,
     errorMessage: "",
     successMessage: "",
   };
@@ -42,12 +37,10 @@ class newGoalForm extends Component {
     this.setState({ [name]: value });
   };
 
-  handleNewGoalSubmit = (e, user, cb, toggle) => {
+  handleUpdateGoalSubmit = (e, user, cb, toggle) => {
+    const { goalId } = this.state;
     e.preventDefault();
-    GOAL_SERVICE.newGoal({
-      ...this.state,
-      goalOwner: user._id,
-    })
+    GOAL_SERVICE.updateGoal(goalId, this.state)
       .then((responseFromServer) => {
         const { currentUser } = responseFromServer.data;
         cb(currentUser);
@@ -56,17 +49,15 @@ class newGoalForm extends Component {
         } = responseFromServer;
         if (errorMessage) {
           this.setState({
-            ...DEFAULT_STATE,
             errorMessage,
             displayForm: this.props.isShown,
           });
         } else {
           this.setState({
-            ...DEFAULT_STATE,
             successMessage,
             displayForm: false,
           });
-          this.props.isDone(this.state.isDone);
+          this.props.isDone(true);
         }
       })
       .catch((err) => {
@@ -80,7 +71,7 @@ class newGoalForm extends Component {
   };
 
   render() {
-    const { goalName, goalDescription, goalDueDate, goalTarget } = this.state;
+    const { goalName, goalDueDate, goalTarget, displayForm } = this.state;
     return (
       <AuthContext.Consumer>
         {(context) => {
@@ -88,25 +79,12 @@ class newGoalForm extends Component {
           const { syncUser } = context;
           return (
             <>
-              <Card
-                id="new-goal-form"
-                className="bg-secondary shadow border-0 "
-              >
-                <CardHeader className="bg-transparent brand-logo">
-                  <div className="text-center">
-                    <h2 className="title">Add new goal</h2>
-                    <p className="mb-0 text-muted">
-                      To create your new goal, please input it's name, a
-                      description that will help you focus on it, a target value
-                      (could be X books read, or % change in body weight), and a
-                      due date to make sure you follow-through.
-                    </p>
-                  </div>
-                </CardHeader>
+              {console.log(this.state)}
+              {displayForm ? (
                 <CardBody className="px-lg-5 py-lg-5">
                   <Form
                     onSubmit={(e) =>
-                      this.handleNewGoalSubmit(
+                      this.handleUpdateGoalSubmit(
                         e,
                         currentUser,
                         syncUser,
@@ -193,7 +171,9 @@ class newGoalForm extends Component {
                     </div>
                   </Form>
                 </CardBody>
-              </Card>
+              ) : (
+                <span></span>
+              )}
             </>
           );
         }}
@@ -202,4 +182,4 @@ class newGoalForm extends Component {
   }
 }
 
-export default newGoalForm;
+export default UpdateGoal;

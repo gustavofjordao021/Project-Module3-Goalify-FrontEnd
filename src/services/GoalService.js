@@ -16,9 +16,9 @@ const GOAL_SERVICE = {
     return service.get(`/app/all-goals`);
   },
 
-  // login(userData) {
-  //    return service.post('/auth/login', userData);
-  // },
+  updateGoal(goalId, updatedGoalData) {
+    return service.post(`/app/${goalId}/update`, updatedGoalData);
+  },
 
   // logout() {
   //   return service.post('/auth/logout', {});
