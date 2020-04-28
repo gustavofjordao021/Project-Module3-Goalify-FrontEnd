@@ -56,6 +56,8 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  overflow-y: scroll;
+  overflow-x: scroll;
 }
 
 /* IDs */
@@ -66,4 +68,9 @@
 
 #secondary-goal-add:hover {
   color: #5e72e4;
+}
+
+#goal-list {
+  font-size: 16px !important;
+  font-weight: 400 !important;
 }

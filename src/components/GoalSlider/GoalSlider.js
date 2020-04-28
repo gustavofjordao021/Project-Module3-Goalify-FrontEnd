@@ -45,7 +45,7 @@ const GoalSlider = (props) => {
                       onClick={(e) => passedDownGoalSelector(_id)}
                     >
                       <span
-                        id="main-cta"
+                        id="main-cta goal-list"
                         className="m-4"
                         role="img"
                         aria-label="goal"
