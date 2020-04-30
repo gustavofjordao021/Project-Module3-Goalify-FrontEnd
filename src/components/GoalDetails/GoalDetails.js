@@ -10,7 +10,7 @@ import GOAL_SERVICE from "../../services/GoalService";
 
 import "./GoalDetails.css";
 
-import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
+import { Button, Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 
 class GoalDetails extends Component {
   state = {
@@ -96,6 +96,9 @@ class GoalDetails extends Component {
         {(context) => {
           const { syncUser } = context;
           const { currentUser, successMessage, errorMessage } = context.state;
+          const userActions = currentUser.goals.filter(
+            (goals) => goals._id === this.props.match.params.goalId
+          )[0].goalActions;
           return (
             <>
               <UserNavBar />
@@ -122,7 +125,7 @@ class GoalDetails extends Component {
                                 <i
                                   className="ni ni-settings mr-3"
                                   onClick={() => this.toggleGoalDetailsOn()}
-                                ></i>
+                                />
                               </div>
                               <div className="details-container">
                                 <p className="m-0 pt-2 pb-2 pl-4 pr-4">
@@ -143,7 +146,60 @@ class GoalDetails extends Component {
                             />
                           )}
                         </CardHeader>
-                        <CardBody className="px-lg-5 py-lg-5"></CardBody>
+                        <CardBody className="px-lg-5 py-lg-5">
+                          {userActions.length > 0 ? (
+                            userActions.map((action, index) => {
+                              console.log(action);
+                            })
+                          ) : (
+                            <>
+                              <div className="text-center text-muted m-4">
+                                <p className="m-0">
+                                  You have no actions!{" "}
+                                  <span role="img" aria-label="shocked">
+                                    😱
+                                  </span>
+                                  <Button
+                                    id="secondary-goal-add"
+                                    color="secondary"
+                                    className="align-items-center title"
+                                    onClick={() => this.toggleGoalFormOn()}
+                                  >
+                                    <span id="main-cta">Create new action</span>
+                                  </Button>
+                                </p>
+                              </div>
+                            </>
+                          )}
+
+                          {/* {currentUser.goals.atoggleGoalDetail ? (
+                            <div className="text-center details-container">
+                              <div className="title-container mb-4">
+                                <h2 className="title mr-3 mb-0">{goalName}</h2>
+                                <i
+                                  className="ni ni-settings mr-3"
+                                  onClick={() => this.toggleGoalDetailsOn()}
+                                />
+                              </div>
+                              <div className="details-container">
+                                <p className="m-0 pt-2 pb-2 pl-4 pr-4">
+                                  <i className="ni ni-calendar-grid-58 mr-3" />{" "}
+                                  {goalDueDate}
+                                </p>
+                                <p className="m-0 pt-2 pb-2 pl-4 pr-4">
+                                  <i className="ni ni-compass-04 mr-3" />{" "}
+                                  {goalTarget}
+                                </p>
+                              </div>
+                            </div>
+                          ) : (
+                            <UpdateGoal
+                              isDone={this.toggleGoalDetailsOff}
+                              goalInfo={this.state}
+                              updateGoalId={this.props.match.params}
+                            />
+                          )} */}
+                        </CardBody>
                       </Card>
                     )}
                   </Card>
