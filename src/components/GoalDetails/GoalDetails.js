@@ -143,35 +143,41 @@ class GoalDetails extends Component {
                               isDone={this.toggleGoalDetailsOff}
                               goalInfo={this.state}
                               updateGoalId={this.props.match.params}
+                              syncUpdate={syncUser}
                             />
                           )}
                         </CardHeader>
                         <CardBody className="px-lg-5 py-lg-5">
-                          {userActions.length > 0 ? (
-                            userActions.map((action, index) => {
-                              console.log(action);
-                            })
+                          {currentUser ? (
+                            userActions.length > 0 ? (
+                              userActions.map((action, index) => {
+                                console.log(action);
+                              })
+                            ) : (
+                              <>
+                                <div className="text-center text-muted m-4">
+                                  <p className="m-0">
+                                    You have no actions!{" "}
+                                    <span role="img" aria-label="shocked">
+                                      😱
+                                    </span>
+                                    <Button
+                                      id="secondary-goal-add"
+                                      color="secondary"
+                                      className="align-items-center title"
+                                      onClick={() => this.toggleGoalFormOn()}
+                                    >
+                                      <span id="main-cta">
+                                        Create new action
+                                      </span>
+                                    </Button>
+                                  </p>
+                                </div>
+                              </>
+                            )
                           ) : (
-                            <>
-                              <div className="text-center text-muted m-4">
-                                <p className="m-0">
-                                  You have no actions!{" "}
-                                  <span role="img" aria-label="shocked">
-                                    😱
-                                  </span>
-                                  <Button
-                                    id="secondary-goal-add"
-                                    color="secondary"
-                                    className="align-items-center title"
-                                    onClick={() => this.toggleGoalFormOn()}
-                                  >
-                                    <span id="main-cta">Create new action</span>
-                                  </Button>
-                                </p>
-                              </div>
-                            </>
+                            <span></span>
                           )}
-
                           {/* {currentUser.goals.atoggleGoalDetail ? (
                             <div className="text-center details-container">
                               <div className="title-container mb-4">

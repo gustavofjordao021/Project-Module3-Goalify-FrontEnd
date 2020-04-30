@@ -37,13 +37,12 @@ class UpdateGoal extends Component {
     this.setState({ [name]: value });
   };
 
-  handleUpdateGoalSubmit = (e, user, cb, toggle) => {
+  handleUpdateGoalSubmit = (e, cb) => {
     const { goalId } = this.state;
     e.preventDefault();
     GOAL_SERVICE.updateGoal(goalId, this.state)
       .then((responseFromServer) => {
-        const { currentUser } = responseFromServer.data;
-        cb(currentUser);
+        cb(responseFromServer.data);
         const {
           data: { errorMessage, successMessage },
         } = responseFromServer;
@@ -57,6 +56,7 @@ class UpdateGoal extends Component {
             successMessage,
             displayForm: false,
           });
+          this.props.syncUpdate(responseFromServer.data);
           this.props.isDone(true);
         }
       })
@@ -79,7 +79,6 @@ class UpdateGoal extends Component {
           const { syncUser } = context;
           return (
             <>
-              {console.log(this.state)}
               {displayForm ? (
                 <CardBody className="px-lg-5 py-lg-5">
                   <Form

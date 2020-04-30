@@ -34,38 +34,42 @@ const GoalSlider = (props) => {
           </CardHeader>
           <Container className="goal-container">
             <UncontrolledCollapse toggler="#toggler">
-              {userLoggedIn.goals.length > 0 ? (
-                userLoggedIn.goals.map((goal, index) => {
-                  const { goalName, _id } = goal;
-                  return (
-                    <Link
-                      to={`/app/goal-details/${_id}`}
-                      key={index}
-                      className="btn btn-link m-1"
-                      onClick={(e) => passedDownGoalSelector(_id)}
-                    >
-                      <span
-                        id="main-cta goal-list"
-                        className="m-4"
-                        role="img"
-                        aria-label="goal"
+              {userLoggedIn ? (
+                userLoggedIn.goals.length > 0 ? (
+                  userLoggedIn.goals.map((goal, index) => {
+                    const { goalName, _id } = goal;
+                    return (
+                      <Link
+                        to={`/app/goal-details/${_id}`}
+                        key={index}
+                        className="btn btn-link m-1"
+                        onClick={(e) => passedDownGoalSelector(_id)}
                       >
-                        🎯 {goalName}
-                      </span>
-                    </Link>
-                  );
-                })
+                        <span
+                          id="main-cta goal-list"
+                          className="m-4"
+                          role="img"
+                          aria-label="goal"
+                        >
+                          🎯 {goalName}
+                        </span>
+                      </Link>
+                    );
+                  })
+                ) : (
+                  <>
+                    <div className="text-center text-muted m-4">
+                      <p className="m-0">
+                        You have no goals!{" "}
+                        <span role="img" aria-label="shocked">
+                          😱
+                        </span>
+                      </p>
+                    </div>
+                  </>
+                )
               ) : (
-                <>
-                  <div className="text-center text-muted m-4">
-                    <p className="m-0">
-                      You have no goals!{" "}
-                      <span role="img" aria-label="shocked">
-                        😱
-                      </span>
-                    </p>
-                  </div>
-                </>
+                <span></span>
               )}
             </UncontrolledCollapse>
           </Container>
