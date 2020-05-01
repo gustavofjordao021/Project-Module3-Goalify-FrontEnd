@@ -56,7 +56,8 @@ class UpdateGoal extends Component {
             successMessage,
             displayForm: false,
           });
-          this.props.syncUpdate(responseFromServer.data);
+          this.props.syncUser(responseFromServer.data);
+          this.props.syncUpdate();
           this.props.isDone(true);
         }
       })
@@ -75,21 +76,14 @@ class UpdateGoal extends Component {
     return (
       <AuthContext.Consumer>
         {(context) => {
-          const { currentUser, successMessage, errorMessage } = context.state;
+          const { successMessage, errorMessage } = context.state;
           const { syncUser } = context;
           return (
             <>
               {displayForm ? (
                 <CardBody className="px-lg-5 py-lg-5">
                   <Form
-                    onSubmit={(e) =>
-                      this.handleUpdateGoalSubmit(
-                        e,
-                        currentUser,
-                        syncUser,
-                        this.toggleFormOff()
-                      )
-                    }
+                    onSubmit={(e) => this.handleUpdateGoalSubmit(e, syncUser)}
                   >
                     <FormGroup>
                       <InputGroup className="input-group-alternative mb-3">
