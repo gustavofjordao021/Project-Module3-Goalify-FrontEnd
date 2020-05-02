@@ -104,19 +104,20 @@ class UpdateGoal extends Component {
           return (
             <>
               {displayForm ? (
-                <CardBody className="px-lg-5 py-lg-5">
+                <CardBody className="px-lg-5 pb-0">
                   <Form
+                    className="update-form-container"
                     onSubmit={(e) => this.handleUpdateGoalSubmit(e, syncUser)}
                   >
-                    <FormGroup>
-                      <InputGroup className="input-group-alternative mb-3">
+                    <FormGroup className="mr-4">
+                      <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText className="input-label p-2 text-center">
                             Goal name
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
-                          className="pl-2"
+                          className="pl-2 half-input"
                           id="goalName"
                           name="goalName"
                           type="text"
@@ -134,7 +135,7 @@ class UpdateGoal extends Component {
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
-                          className="pl-2"
+                          className="pl-2 half-input"
                           id="goalDueDate"
                           name="goalDueDate"
                           type="date"
@@ -144,7 +145,7 @@ class UpdateGoal extends Component {
                         />
                       </InputGroup>
                     </FormGroup>
-                    <FormGroup>
+                    <FormGroup className="pb-0 mb-0 full-width">
                       <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText className="input-label p-2 text-center">
@@ -169,16 +170,16 @@ class UpdateGoal extends Component {
                     ) : (
                       <span></span>
                     )}
-                    <div className="text-center">
+                    <div className="text-center full-width">
                       <Button
-                        className="mt-2 ml-2 mb-2"
+                        className="mt-3 ml-2"
                         color="primary"
                         type="submit"
                       >
-                        Add new goal
+                        Update goal
                       </Button>
                       <Button
-                        className="mt-2 ml-2 mb-2"
+                        className="mt-3 ml-2"
                         color="danger"
                         type="button"
                         onClick={() => this.handleGoalDelete()}
@@ -186,7 +187,7 @@ class UpdateGoal extends Component {
                         Delete goal
                       </Button>
                       <Button
-                        className="mt-2 mr-2 mb-2 cancel-link"
+                        className="mt-3 mr-2 cancel-link"
                         color="secondary"
                         onClick={() => this.toggleFormOff()}
                       >

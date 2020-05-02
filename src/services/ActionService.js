@@ -7,9 +7,9 @@ const service = axios.create({
   withCredentials: true,
 });
 
-const GOAL_SERVICE = {
-  newGoal(newGoalData) {
-    return service.post("/app/create-goal", newGoalData);
+const ACTION_SERVICE = {
+  newAction(newActionData) {
+    return service.post("/app/:goalId/new-action", newActionData);
   },
 
   retrieveGoals() {
@@ -25,4 +25,4 @@ const GOAL_SERVICE = {
   },
 };
 
-export default GOAL_SERVICE;
+export default ACTION_SERVICE;

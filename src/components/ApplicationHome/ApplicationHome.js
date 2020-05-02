@@ -50,7 +50,7 @@ class ApplicationHome extends Component {
                       passedDownGoalSelector={(key) => this.updateGoals(key)}
                     />
                     <Col className="col-8 mt-4 mr-4">
-                      <Card className="fixed-height bg-secondary shadow app-container">
+                      <Card className="fixed-height bg-secondary shadow main-container">
                         {this.state.isGoalFormVisible ? (
                           <NewGoal isDone={this.toggleGoalFormOff} />
                         ) : (

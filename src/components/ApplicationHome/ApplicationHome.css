@@ -6,6 +6,14 @@
   height: 75vh;
 }
 
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+  overflow-y: scroll;
+}
+
 .fixed-height {
   height: 75vh;
 }
