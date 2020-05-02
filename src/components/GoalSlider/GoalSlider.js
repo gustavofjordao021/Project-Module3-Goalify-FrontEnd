@@ -35,7 +35,7 @@ const GoalSlider = (props) => {
           <Container className="goal-container">
             <UncontrolledCollapse toggler="#toggler">
               {userLoggedIn ? (
-                userLoggedIn.goals.length > 0 ? (
+                userLoggedIn.goals?.length > 0 ? (
                   userLoggedIn.goals.map((goal, index) => {
                     const { goalName, _id } = goal;
                     return (

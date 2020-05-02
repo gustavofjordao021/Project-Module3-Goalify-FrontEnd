@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { AuthContext } from "../../context/index";
 
 import UserNavBar from "../Navbar/UserNavBar/UserNavBar";
-import GoalDetails from "../GoalDetails/GoalDetails";
 import GoalSlider from "../GoalSlider/GoalSlider";
 import NewGoal from "../NewGoal/NewGoal";
 

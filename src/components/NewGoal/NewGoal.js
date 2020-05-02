@@ -60,14 +60,8 @@ class newGoalForm extends Component {
             errorMessage,
             displayForm: this.props.isShown,
           });
-        } else {
-          this.setState({
-            ...DEFAULT_STATE,
-            successMessage,
-            displayForm: false,
-          });
-          this.props.isDone(this.state.isDone);
         }
+        this.props.isDone(this.state.isDone);
       })
       .catch((err) => {
         if (err.response && err.response.data) {
@@ -80,7 +74,7 @@ class newGoalForm extends Component {
   };
 
   render() {
-    const { goalName, goalDescription, goalDueDate, goalTarget } = this.state;
+    const { goalName, goalDueDate, goalTarget } = this.state;
     return (
       <AuthContext.Consumer>
         {(context) => {
@@ -106,12 +100,7 @@ class newGoalForm extends Component {
                 <CardBody className="px-lg-5 py-lg-5">
                   <Form
                     onSubmit={(e) =>
-                      this.handleNewGoalSubmit(
-                        e,
-                        currentUser,
-                        syncUser,
-                        this.toggleFormOff()
-                      )
+                      this.handleNewGoalSubmit(e, currentUser, syncUser)
                     }
                   >
                     <FormGroup>

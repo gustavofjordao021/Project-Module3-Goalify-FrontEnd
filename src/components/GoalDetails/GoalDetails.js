@@ -40,7 +40,8 @@ class GoalDetails extends Component {
         let selectedGoal = responseFromServer.data.filter(
           (eachGoal) => eachGoal._id === goalId.goalId
         )[0];
-        const correctDate = selectedGoal.goalDueDate.substring(0, 9);
+        const correctDate = selectedGoal.goalDueDate.substring(0, 10);
+        console.log(new Date(selectedGoal.goalDueDate.substring(0, 10)));
         this.setState((prevState) => ({
           ...prevState,
           userGoals: responseFromServer.data,
@@ -59,7 +60,7 @@ class GoalDetails extends Component {
       ...prevState,
       goalName: goal.goalName,
       goalDescription: goal.goalDescription,
-      goalDueDate: goal.goalDueDate.substring(0, 9),
+      goalDueDate: goal.goalDueDate.substring(0, 10),
       goalTarget: goal.goalTarget,
     }));
   };
@@ -92,7 +93,7 @@ class GoalDetails extends Component {
         let selectedGoal = responseFromServer.data.filter(
           (eachGoal) => eachGoal._id === goalId.goalId
         )[0];
-        const correctDate = selectedGoal.goalDueDate.substring(0, 9);
+        const correctDate = selectedGoal.goalDueDate.substring(0, 10);
         this.setState((prevState) => ({
           ...prevState,
           userGoals: responseFromServer.data,
@@ -118,9 +119,9 @@ class GoalDetails extends Component {
         {(context) => {
           const { syncUser, isUserLoggedIn } = context;
           const { currentUser, successMessage, errorMessage } = context.state;
-          const userActions = currentUser.goals.filter(
-            (goals) => goals._id === this.props.match.params.goalId
-          )[0].goalActions;
+          {
+            /* const userActions =  */
+          }
           return (
             <>
               <UserNavBar />
@@ -162,6 +163,7 @@ class GoalDetails extends Component {
                             </div>
                           ) : (
                             <UpdateGoal
+                              {...this.props}
                               isDone={this.toggleGoalDetailsOff}
                               goalInfo={this.state}
                               updateGoalId={this.props.match.params}
@@ -172,10 +174,18 @@ class GoalDetails extends Component {
                         </CardHeader>
                         <CardBody className="px-lg-5 py-lg-5">
                           {currentUser ? (
-                            userActions.length > 0 ? (
-                              userActions.map((action, index) => {
-                                console.log(action);
-                              })
+                            currentUser.goals.filter(
+                              (goals) =>
+                                goals._id === this.props.match.params.goalId
+                            )[0].goalActions.length > 0 ? (
+                              currentUser.goals
+                                .filter(
+                                  (goals) =>
+                                    goals._id === this.props.match.params.goalId
+                                )[0]
+                                .goalActions.map((action, index) => {
+                                  console.log(action);
+                                })
                             ) : (
                               <Table striped>
                                 <thead>
@@ -190,7 +200,7 @@ class GoalDetails extends Component {
                                     <th scope="row">1</th>
                                     <td className="p-0">
                                       {" "}
-                                      <div className="text-center text-muted">
+                                      <div className="text-center text-muted m-2">
                                         <p className="m-0">
                                           You have no actions!{" "}
                                           <span role="img" aria-label="shocked">

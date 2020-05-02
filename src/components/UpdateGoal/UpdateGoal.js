@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 import { AuthContext } from "../../context/index";
 import GOAL_SERVICE from "../../services/GoalService";
@@ -60,6 +61,28 @@ class UpdateGoal extends Component {
           this.props.syncUpdate();
           this.props.isDone(true);
         }
+      })
+      .catch((err) => {
+        if (err.response && err.response.data) {
+          this.setState((prevState) => ({
+            ...prevState,
+            errorMessage: err.response.data.message,
+          }));
+        }
+      });
+  };
+
+  handleGoalDelete = () => {
+    const { goalId } = this.state;
+    GOAL_SERVICE.deleteGoal(goalId)
+      .then((responseFromServer) => {
+        this.props.history.push("/app");
+        console.log(1);
+        this.props.syncUser(responseFromServer.data);
+        console.log(2);
+        this.props.syncUpdate();
+        console.log(3);
+        this.props.isDone(true);
       })
       .catch((err) => {
         if (err.response && err.response.data) {
@@ -153,6 +176,14 @@ class UpdateGoal extends Component {
                         type="submit"
                       >
                         Add new goal
+                      </Button>
+                      <Button
+                        className="mt-2 ml-2 mb-2"
+                        color="danger"
+                        type="button"
+                        onClick={() => this.handleGoalDelete()}
+                      >
+                        Delete goal
                       </Button>
                       <Button
                         className="mt-2 mr-2 mb-2 cancel-link"

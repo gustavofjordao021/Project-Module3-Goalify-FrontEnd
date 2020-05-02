@@ -20,9 +20,9 @@ const GOAL_SERVICE = {
     return service.post(`/app/${goalId}/update`, updatedGoalData);
   },
 
-  // logout() {
-  //   return service.post('/auth/logout', {});
-  // },
+  deleteGoal(goalId) {
+    return service.post(`/app/${goalId}/delete`);
+  },
 
   // getUser() {
   //   return service.get('/auth/isLoggedIn');
