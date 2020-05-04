@@ -5,6 +5,7 @@ import UserNavBar from "../Navbar/UserNavBar/UserNavBar";
 import UpdateGoal from "../UpdateGoal/UpdateGoal";
 import GoalSlider from "../GoalSlider/GoalSlider";
 import NewGoal from "../NewGoal/NewGoal";
+import NewAction from "../NewAction/NewAction";
 
 import { AuthContext } from "../../context/index";
 import GOAL_SERVICE from "../../services/GoalService";
@@ -31,7 +32,6 @@ import {
 class GoalDetails extends Component {
   state = {
     goalName: "",
-    goalDescription: "",
     goalDueDate: 0,
     goalTarget: 0,
     actionName: "",
@@ -41,10 +41,10 @@ class GoalDetails extends Component {
     successMessage: "",
     toggleGoalDetail: false,
     isGoalFormVisible: false,
-    areActionDetailsVisible: false,
+    isActionFormVisible: false,
   };
 
-  componentWillMount = () => {
+  UNSAFE_componentWillMount = () => {
     GOAL_SERVICE.retrieveGoals()
       .then((responseFromServer) => {
         const goalId = this.props.match.params;
@@ -56,7 +56,6 @@ class GoalDetails extends Component {
           ...prevState,
           userGoals: responseFromServer.data,
           goalName: selectedGoal.goalName,
-          goalDescription: selectedGoal.goalDescription,
           goalDueDate: correctDate,
           goalTarget: selectedGoal.goalTarget,
         }));
@@ -69,7 +68,6 @@ class GoalDetails extends Component {
     this.setState((prevState) => ({
       ...prevState,
       goalName: goal.goalName,
-      goalDescription: goal.goalDescription,
       goalDueDate: goal.goalDueDate.substring(0, 10),
       goalTarget: goal.goalTarget,
     }));
@@ -94,6 +92,7 @@ class GoalDetails extends Component {
       ...prevState,
       areActionDetailsVisible: true,
     }));
+    console.log("On: ", this.state);
   };
 
   toggleActionFormOff = () => {
@@ -101,6 +100,7 @@ class GoalDetails extends Component {
       ...prevState,
       areActionDetailsVisible: false,
     }));
+    console.log("Off: ", this.state);
   };
 
   toggleGoalDetailsOn = () => {
@@ -136,47 +136,13 @@ class GoalDetails extends Component {
     this.setState({ [name]: value });
   };
 
-  handleActionSubmit = (e, cb) => {
-    const { goalId } = this.state;
-    e.preventDefault();
-    ACTION_SERVICE.newAction(goalId, this.state)
-      .then((responseFromServer) => {
-        cb(responseFromServer.data);
-        const {
-          data: { errorMessage, successMessage },
-        } = responseFromServer;
-        if (errorMessage) {
-          this.setState({
-            errorMessage,
-            displayForm: this.props.isShown,
-          });
-        } else {
-          this.setState({
-            successMessage,
-            displayForm: false,
-          });
-          this.props.syncUser(responseFromServer.data);
-          this.props.syncUpdate();
-          this.props.isDone(true);
-        }
-      })
-      .catch((err) => {
-        if (err.response && err.response.data) {
-          this.setState((prevState) => ({
-            ...prevState,
-            errorMessage: err.response.data.message,
-          }));
-        }
-      });
-  };
-
   render() {
     const {
       goalName,
       goalTarget,
       goalDueDate,
       toggleGoalDetail,
-      areActionDetailsVisible,
+      isActionFormVisible,
       actionName,
       actionDescription,
     } = this.state;
@@ -251,20 +217,7 @@ class GoalDetails extends Component {
                               id="action-container"
                             >
                               {currentUser ? (
-                                currentUser.goals.filter(
-                                  (goals) =>
-                                    goals._id === this.props.match.params.goalId
-                                )[0].goalActions.length > 0 ? (
-                                  currentUser.goals
-                                    .filter(
-                                      (goals) =>
-                                        goals._id ===
-                                        this.props.match.params.goalId
-                                    )[0]
-                                    .goalActions.map((action, index) => {
-                                      console.log(action);
-                                    })
-                                ) : (
+                                <>
                                   <Table striped>
                                     <thead>
                                       <tr>
@@ -275,74 +228,20 @@ class GoalDetails extends Component {
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      {areActionDetailsVisible ? (
-                                        <>
-                                          <tr>
-                                            <td>
-                                              <span></span>
-                                            </td>
-                                            <td>
-                                              <Form>
-                                                <InputGroup>
-                                                  <Input
-                                                    id="actionName"
-                                                    name="actionName"
-                                                    type="text"
-                                                    placeholder="Buy books"
-                                                    value={actionName}
-                                                    onChange={
-                                                      this.onChangeHandler
-                                                    }
-                                                  ></Input>
-                                                </InputGroup>
-                                              </Form>
-                                            </td>
-                                            <td>
-                                              <Form>
-                                                <InputGroup>
-                                                  <Input
-                                                    id="actionDescription"
-                                                    name="actionDescription"
-                                                    type="text"
-                                                    placeholder="Buy books on shopping list"
-                                                    value={actionDescription}
-                                                    onChange={
-                                                      this.onChangeHandler
-                                                    }
-                                                  ></Input>
-                                                </InputGroup>
-                                              </Form>
-                                            </td>
-                                            <td>
-                                              <Form>
-                                                <Button
-                                                  color="primary"
-                                                  className="btn-inner--icon"
-                                                >
-                                                  <i className="ni ni-check-bold" />
-                                                </Button>
-                                                <Button
-                                                  color="danger"
-                                                  className="btn-inner--icon"
-                                                >
-                                                  <i className="ni ni-fat-delete" />
-                                                </Button>
-                                                <Button
-                                                  color="secondary"
-                                                  className="btn-inner--icon"
-                                                  onClick={() =>
-                                                    this.toggleActionFormOff()
-                                                  }
-                                                >
-                                                  <i
-                                                    className="ni ni-fat-remove"
-                                                    id="icon-color"
-                                                  />
-                                                </Button>
-                                              </Form>
-                                            </td>
-                                          </tr>
-                                        </>
+                                      {currentUser.goals.filter(
+                                        (goals) =>
+                                          goals._id ===
+                                          this.props.match.params.goalId
+                                      )[0].goalActions.length > 0 ? (
+                                        currentUser.goals
+                                          .filter(
+                                            (goals) =>
+                                              goals._id ===
+                                              this.props.match.params.goalId
+                                          )[0]
+                                          .goalActions.map((action, index) => {
+                                            console.log(action);
+                                          })
                                       ) : (
                                         <>
                                           <tr>
@@ -382,11 +281,19 @@ class GoalDetails extends Component {
                                           </tr>
                                         </>
                                       )}
+                                      <NewAction
+                                        {...this.props}
+                                        isDone={this.toggleActionFormOff}
+                                        isVisible={isActionFormVisible}
+                                        updateGoalId={this.props.match.params}
+                                        syncUpdate={isUserLoggedIn}
+                                        syncUser={syncUser}
+                                      />
                                     </tbody>
                                   </Table>
-                                )
+                                </>
                               ) : (
-                                <span></span>
+                                <Redirect to="/login" />
                               )}
                             </CardBody>
                           </Card>
@@ -405,3 +312,7 @@ class GoalDetails extends Component {
 }
 
 export default GoalDetails;
+
+{
+  /*  */
+}
