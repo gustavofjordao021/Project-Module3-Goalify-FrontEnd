@@ -1,32 +1,16 @@
 import React, { Component } from "react";
 
 import { AuthContext } from "../../context/index";
-import GOAL_SERVICE from "../../services/GoalService";
 import ACTION_SERVICE from "../../services/ActionService";
 
 import "./NewAction.css";
 
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col,
-  Table,
-  FormGroup,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-} from "reactstrap";
+import { Button, Form, Input, InputGroup } from "reactstrap";
 
 class NewAction extends Component {
   state = {
     actionName: "",
     actionDescription: "",
-    areActionDetailsVisible: this.props.isVisible,
   };
 
   onChangeHandler = (event) => {
@@ -35,27 +19,26 @@ class NewAction extends Component {
   };
 
   handleActionSubmit = (e, cb) => {
-    const { goalId } = this.state;
+    const { goalId } = this.props.updateGoalId;
     e.preventDefault();
     ACTION_SERVICE.newAction(goalId, this.state)
       .then((responseFromServer) => {
-        cb(responseFromServer.data);
+        const { updatedUser } = responseFromServer.data;
+        cb(updatedUser);
         const {
           data: { errorMessage, successMessage },
         } = responseFromServer;
         if (errorMessage) {
           this.setState({
             errorMessage,
-            displayForm: this.props.isShown,
           });
         } else {
           this.setState({
             successMessage,
-            displayForm: false,
           });
-          this.props.syncUser(responseFromServer.data);
+          this.props.syncUser(updatedUser);
           this.props.syncUpdate();
-          this.props.isDone(true);
+          this.props.isDone();
         }
       })
       .catch((err) => {
@@ -69,19 +52,15 @@ class NewAction extends Component {
   };
 
   render() {
-    const {
-      areActionDetailsVisible,
-      actionName,
-      actionDescription,
-    } = this.state;
+    const { actionName, actionDescription } = this.state;
+    const { isVisible } = this.props;
     return (
       <AuthContext.Consumer>
         {(context) => {
           const { syncUser } = context;
           return (
             <>
-              {console.log(this.state)}
-              {areActionDetailsVisible ? (
+              {isVisible ? (
                 <>
                   <tr>
                     <td>

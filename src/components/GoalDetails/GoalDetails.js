@@ -9,7 +9,6 @@ import NewAction from "../NewAction/NewAction";
 
 import { AuthContext } from "../../context/index";
 import GOAL_SERVICE from "../../services/GoalService";
-import ACTION_SERVICE from "../../services/ActionService";
 
 import "./GoalDetails.css";
 
@@ -21,12 +20,6 @@ import {
   Row,
   Col,
   Table,
-  FormGroup,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
 } from "reactstrap";
 
 class GoalDetails extends Component {
@@ -34,8 +27,6 @@ class GoalDetails extends Component {
     goalName: "",
     goalDueDate: 0,
     goalTarget: 0,
-    actionName: "",
-    actionDescription: "",
     userGoals: [],
     errorMessage: "",
     successMessage: "",
@@ -44,7 +35,7 @@ class GoalDetails extends Component {
     isActionFormVisible: false,
   };
 
-  UNSAFE_componentWillMount = () => {
+  componentWillMount = () => {
     GOAL_SERVICE.retrieveGoals()
       .then((responseFromServer) => {
         const goalId = this.props.match.params;
@@ -90,17 +81,29 @@ class GoalDetails extends Component {
   toggleActionFormOn = () => {
     this.setState((prevState) => ({
       ...prevState,
-      areActionDetailsVisible: true,
+      isActionFormVisible: true,
     }));
-    console.log("On: ", this.state);
   };
 
   toggleActionFormOff = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      areActionDetailsVisible: false,
-    }));
-    console.log("Off: ", this.state);
+    GOAL_SERVICE.retrieveGoals()
+      .then((responseFromServer) => {
+        const goalId = this.props.match.params;
+        let selectedGoal = responseFromServer.data.filter(
+          (eachGoal) => eachGoal._id === goalId.goalId
+        )[0];
+        const correctDate = selectedGoal.goalDueDate.substring(0, 10);
+        this.setState((prevState) => ({
+          ...prevState,
+          userGoals: responseFromServer.data,
+          goalName: selectedGoal.goalName,
+          goalDescription: selectedGoal.goalDescription,
+          goalDueDate: correctDate,
+          goalTarget: selectedGoal.goalTarget,
+          isActionFormVisible: false,
+        }));
+      })
+      .catch((errorMessage) => console.log(errorMessage));
   };
 
   toggleGoalDetailsOn = () => {
@@ -143,19 +146,12 @@ class GoalDetails extends Component {
       goalDueDate,
       toggleGoalDetail,
       isActionFormVisible,
-      actionName,
-      actionDescription,
     } = this.state;
     return (
       <AuthContext.Consumer>
         {(context) => {
           const { syncUser, isUserLoggedIn } = context;
-          const {
-            currentUser,
-            isLoggedIn,
-            successMessage,
-            errorMessage,
-          } = context.state;
+          const { currentUser, isLoggedIn } = context.state;
           return (
             <>
               {!isLoggedIn ? (
@@ -218,7 +214,7 @@ class GoalDetails extends Component {
                             >
                               {currentUser ? (
                                 <>
-                                  <Table striped>
+                                  <Table hover>
                                     <thead>
                                       <tr>
                                         <th>Done?</th>
@@ -240,7 +236,28 @@ class GoalDetails extends Component {
                                               this.props.match.params.goalId
                                           )[0]
                                           .goalActions.map((action, index) => {
-                                            console.log(action);
+                                            const {
+                                              actionName,
+                                              actionDescription,
+                                            } = action;
+                                            return (
+                                              <tr key={index}>
+                                                <td>{}</td>
+                                                <td>{actionName}</td>
+                                                <td>{actionDescription}</td>
+                                                <td>
+                                                  <Button
+                                                    color="secondary"
+                                                    className="btn-inner--icon"
+                                                  >
+                                                    <i
+                                                      className="ni ni-settings"
+                                                      id="icon-color"
+                                                    />
+                                                  </Button>
+                                                </td>
+                                              </tr>
+                                            );
                                           })
                                       ) : (
                                         <>
@@ -281,6 +298,33 @@ class GoalDetails extends Component {
                                           </tr>
                                         </>
                                       )}
+                                      {currentUser.goals.filter(
+                                        (goals) =>
+                                          goals._id ===
+                                          this.props.match.params.goalId
+                                      )[0].goalActions.length > 0 &&
+                                      !isActionFormVisible ? (
+                                        <tr>
+                                          <td colSpan="4">
+                                            <div className="center-items">
+                                              <Button
+                                                id="secondary-goal-add"
+                                                color="secondary"
+                                                className="align-items-center title"
+                                                onClick={() =>
+                                                  this.toggleActionFormOn()
+                                                }
+                                              >
+                                                <span id="main-cta">
+                                                  Create new action
+                                                </span>
+                                              </Button>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      ) : (
+                                        <span></span>
+                                      )}
                                       <NewAction
                                         {...this.props}
                                         isDone={this.toggleActionFormOff}
@@ -312,7 +356,3 @@ class GoalDetails extends Component {
 }
 
 export default GoalDetails;
-
-{
-  /*  */
-}

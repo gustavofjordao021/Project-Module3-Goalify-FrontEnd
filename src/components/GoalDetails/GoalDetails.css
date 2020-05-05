@@ -61,3 +61,10 @@
 #icon-color {
   color: #5e72e4 !important;
 }
+
+.center-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* width: 890px; */
+}

@@ -121,7 +121,7 @@ class AuthProvider extends React.Component {
     AUTH_SERVICE.login(this.state.formLogin)
       .then((responseFromServer) => {
         const {
-          data: { user, errorMessage, successMessage },
+          data: { user, errorMessage },
         } = responseFromServer;
         if (errorMessage) {
           this.setState((prevState) => ({

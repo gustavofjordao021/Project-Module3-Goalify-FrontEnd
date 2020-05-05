@@ -52,7 +52,7 @@ class newGoalForm extends Component {
         const { currentUser } = responseFromServer.data;
         cb(currentUser);
         const {
-          data: { errorMessage, successMessage },
+          data: { errorMessage },
         } = responseFromServer;
         if (errorMessage) {
           this.setState({

@@ -8,8 +8,8 @@ const service = axios.create({
 });
 
 const ACTION_SERVICE = {
-  newAction(newActionData) {
-    return service.post("/app/:goalId/new-action", newActionData);
+  newAction(goalId, newActionData) {
+    return service.post(`/app/${goalId}/new-action`, newActionData);
   },
 
   retrieveGoals() {

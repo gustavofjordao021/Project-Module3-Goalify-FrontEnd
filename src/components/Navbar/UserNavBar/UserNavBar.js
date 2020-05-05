@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect, Router, Switch, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { AuthContext } from "../../../context";
 
@@ -26,8 +26,6 @@ class UserNavBar extends Component {
     return (
       <AuthContext.Consumer>
         {(context) => {
-          const { currentUser } = context.state;
-
           const { userLogOut } = context;
           return (
             <Navbar
