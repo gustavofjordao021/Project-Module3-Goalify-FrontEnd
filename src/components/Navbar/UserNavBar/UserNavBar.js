@@ -33,8 +33,14 @@ class UserNavBar extends Component {
               expand="lg"
             >
               <Container>
-                <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Primary Color
+                <NavbarBrand href="/app" className="navbar-nav">
+                  {" "}
+                  <img
+                    alt="reversed logo"
+                    src={require("../../../assets/img/brand/logo-goalify-reverse.svg")}
+                    className="mr-2"
+                  ></img>
+                  Goalify
                 </NavbarBrand>
                 <button
                   aria-controls="navbar-primary"
@@ -54,7 +60,7 @@ class UserNavBar extends Component {
                       <Col className="collapse-brand" xs="6">
                         <Link to="/">
                           <img
-                            alt="..."
+                            alt="reversed logo"
                             src={require("../../../assets/img/brand/logo-goalify.svg")}
                           />
                         </Link>
@@ -82,16 +88,19 @@ class UserNavBar extends Component {
                         href="#pablo"
                         onClick={(e) => e.preventDefault()}
                       >
-                        Discover <span className="sr-only">(current)</span>
+                        Welcome back, <b>UserName</b>
                       </NavLink>
                     </NavItem>
                     <NavItem>
-                      <NavLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
+                      <Button
+                        color="default"
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                        }}
                       >
                         Profile
-                      </NavLink>
+                      </Button>
                     </NavItem>
                     <UncontrolledDropdown nav>
                       <NavLink role="button">
