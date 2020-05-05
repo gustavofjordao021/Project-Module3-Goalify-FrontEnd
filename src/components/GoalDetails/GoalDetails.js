@@ -242,7 +242,19 @@ class GoalDetails extends Component {
                                             } = action;
                                             return (
                                               <tr key={index}>
-                                                <td>{}</td>
+                                                <td>
+                                                  <div className="custom-control custom-control-alternative custom-checkbox mb-3">
+                                                    <input
+                                                      className="custom-control-input"
+                                                      id={index}
+                                                      type="checkbox"
+                                                    />
+                                                    <label
+                                                      className="custom-control-label"
+                                                      htmlFor={index}
+                                                    ></label>
+                                                  </div>
+                                                </td>
                                                 <td>{actionName}</td>
                                                 <td>{actionDescription}</td>
                                                 <td>
@@ -259,11 +271,10 @@ class GoalDetails extends Component {
                                               </tr>
                                             );
                                           })
-                                      ) : (
+                                      ) : !isActionFormVisible ? (
                                         <>
                                           <tr>
-                                            <th scope="row">1</th>
-                                            <td className="p-0">
+                                            <td className="p-0" colSpan="4">
                                               {" "}
                                               <div className="text-center text-muted m-2">
                                                 <p className="m-0">
@@ -289,14 +300,10 @@ class GoalDetails extends Component {
                                                 </Button>
                                               </div>
                                             </td>
-                                            <td>
-                                              <span></span>
-                                            </td>
-                                            <td>
-                                              <span></span>
-                                            </td>
                                           </tr>
                                         </>
+                                      ) : (
+                                        <span></span>
                                       )}
                                       {currentUser.goals.filter(
                                         (goals) =>

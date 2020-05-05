@@ -66,5 +66,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: 890px; */
+}
+
+th,
+td {
+  vertical-align: center;
+  text-align: center;
 }
