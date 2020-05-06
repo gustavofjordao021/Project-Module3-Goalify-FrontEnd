@@ -6,9 +6,11 @@ import UpdateGoal from "../UpdateGoal/UpdateGoal";
 import GoalSlider from "../GoalSlider/GoalSlider";
 import NewGoal from "../NewGoal/NewGoal";
 import NewAction from "../NewAction/NewAction";
+import ActionLine from "../ActionLine/ActionLine";
 
 import { AuthContext } from "../../context/index";
 import GOAL_SERVICE from "../../services/GoalService";
+import ACTION_SERVICE from "../../services/ActionService";
 
 import "./GoalDetails.css";
 
@@ -21,7 +23,6 @@ import {
   Col,
   Table,
 } from "reactstrap";
-import ACTION_SERVICE from "../../services/ActionService";
 
 class GoalDetails extends Component {
   state = {
@@ -144,7 +145,8 @@ class GoalDetails extends Component {
     const goalId = this.props.match.params.goalId;
     ACTION_SERVICE.actionCheck(goalId, actionId)
       .then((responseFromServer) => {
-        syncUser(responseFromServer.data);
+        const { updatedUser } = responseFromServer.data;
+        syncUser(updatedUser);
         const {
           data: { errorMessage, successMessage },
         } = responseFromServer;
@@ -158,7 +160,7 @@ class GoalDetails extends Component {
             successMessage,
             displayForm: false,
           });
-          syncUser(responseFromServer.data);
+          syncUser(updatedUser);
           syncUpdate();
         }
       })
@@ -269,51 +271,21 @@ class GoalDetails extends Component {
                                               this.props.match.params.goalId
                                           )[0]
                                           .goalActions.map((action) => {
-                                            const {
-                                              actionName,
-                                              actionDescription,
-                                              _id,
-                                            } = action;
                                             return (
-                                              <tr key={_id}>
-                                                <td>
-                                                  <div className="custom-control custom-control-alternative custom-checkbox mb-0">
-                                                    <input
-                                                      className="custom-control-input"
-                                                      id={_id}
-                                                      type="checkbox"
-                                                      onClick={() => {
-                                                        this.actionCheck(
-                                                          _id,
-                                                          syncUser,
-                                                          isLoggedIn
-                                                        );
-                                                      }}
-                                                    />
-                                                    <label
-                                                      className="custom-control-label"
-                                                      htmlFor={_id}
-                                                    ></label>
-                                                  </div>
-                                                </td>
-                                                <td id="text-center-align">
-                                                  {actionName}
-                                                </td>
-                                                <td id="text-center-align">
-                                                  {actionDescription}
-                                                </td>
-                                                <td>
-                                                  <Button
-                                                    color="secondary"
-                                                    className="btn-inner--icon"
-                                                  >
-                                                    <i
-                                                      className="ni ni-settings"
-                                                      id="icon-color"
-                                                    />
-                                                  </Button>
-                                                </td>
-                                              </tr>
+                                              <>
+                                                <ActionLine
+                                                  actionData={action}
+                                                  syncUpdate={isUserLoggedIn}
+                                                  syncUser={syncUser}
+                                                  checkAction={() =>
+                                                    this.actionCheck(
+                                                      action._id,
+                                                      syncUser,
+                                                      isLoggedIn
+                                                    )
+                                                  }
+                                                />
+                                              </>
                                             );
                                           })
                                       ) : !isActionFormVisible ? (
