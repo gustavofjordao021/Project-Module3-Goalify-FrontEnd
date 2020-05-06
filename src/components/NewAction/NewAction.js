@@ -18,10 +18,12 @@ class NewAction extends Component {
     this.setState({ [name]: value });
   };
 
-  handleActionSubmit = (e, cb) => {
+  handleActionSubmit = (e, cb, actionOwner) => {
     const { goalId } = this.props.updateGoalId;
     e.preventDefault();
-    ACTION_SERVICE.newAction(goalId, this.state)
+    ACTION_SERVICE.newAction(goalId, {
+      actionData: { ...this.state, actionOwner },
+    })
       .then((responseFromServer) => {
         const { updatedUser } = responseFromServer.data;
         cb(updatedUser);
@@ -34,6 +36,8 @@ class NewAction extends Component {
           });
         } else {
           this.setState({
+            actionName: "",
+            actionDescription: "",
             successMessage,
           });
           this.props.syncUser(updatedUser);
@@ -58,6 +62,7 @@ class NewAction extends Component {
       <AuthContext.Consumer>
         {(context) => {
           const { syncUser } = context;
+          const { currentUser } = context.state;
           return (
             <>
               {isVisible ? (
@@ -96,7 +101,9 @@ class NewAction extends Component {
                     </td>
                     <td>
                       <Form
-                        onSubmit={(e) => this.handleActionSubmit(e, syncUser)}
+                        onSubmit={(e) =>
+                          this.handleActionSubmit(e, syncUser, currentUser._id)
+                        }
                       >
                         <Button color="primary" className="btn-inner--icon">
                           <i className="ni ni-check-bold" />

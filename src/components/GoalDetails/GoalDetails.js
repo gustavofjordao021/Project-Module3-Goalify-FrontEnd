@@ -21,6 +21,7 @@ import {
   Col,
   Table,
 } from "reactstrap";
+import ACTION_SERVICE from "../../services/ActionService";
 
 class GoalDetails extends Component {
   state = {
@@ -139,6 +140,38 @@ class GoalDetails extends Component {
     this.setState({ [name]: value });
   };
 
+  actionCheck = (actionId, syncUser, syncUpdate) => {
+    const goalId = this.props.match.params.goalId;
+    ACTION_SERVICE.actionCheck(goalId, actionId)
+      .then((responseFromServer) => {
+        syncUser(responseFromServer.data);
+        const {
+          data: { errorMessage, successMessage },
+        } = responseFromServer;
+        if (errorMessage) {
+          this.setState({
+            errorMessage,
+            displayForm: this.props.isShown,
+          });
+        } else {
+          this.setState({
+            successMessage,
+            displayForm: false,
+          });
+          syncUser(responseFromServer.data);
+          syncUpdate();
+        }
+      })
+      .catch((err) => {
+        if (err.response && err.response.data) {
+          this.setState((prevState) => ({
+            ...prevState,
+            errorMessage: err.response.data.message,
+          }));
+        }
+      });
+  };
+
   render() {
     const {
       goalName,
@@ -235,28 +268,40 @@ class GoalDetails extends Component {
                                               goals._id ===
                                               this.props.match.params.goalId
                                           )[0]
-                                          .goalActions.map((action, index) => {
+                                          .goalActions.map((action) => {
                                             const {
                                               actionName,
                                               actionDescription,
+                                              _id,
                                             } = action;
                                             return (
-                                              <tr key={index}>
+                                              <tr key={_id}>
                                                 <td>
-                                                  <div className="custom-control custom-control-alternative custom-checkbox mb-3">
+                                                  <div className="custom-control custom-control-alternative custom-checkbox mb-0">
                                                     <input
                                                       className="custom-control-input"
-                                                      id={index}
+                                                      id={_id}
                                                       type="checkbox"
+                                                      onClick={() => {
+                                                        this.actionCheck(
+                                                          _id,
+                                                          syncUser,
+                                                          isLoggedIn
+                                                        );
+                                                      }}
                                                     />
                                                     <label
                                                       className="custom-control-label"
-                                                      htmlFor={index}
+                                                      htmlFor={_id}
                                                     ></label>
                                                   </div>
                                                 </td>
-                                                <td>{actionName}</td>
-                                                <td>{actionDescription}</td>
+                                                <td id="text-center-align">
+                                                  {actionName}
+                                                </td>
+                                                <td id="text-center-align">
+                                                  {actionDescription}
+                                                </td>
                                                 <td>
                                                   <Button
                                                     color="secondary"
@@ -330,7 +375,7 @@ class GoalDetails extends Component {
                                           </td>
                                         </tr>
                                       ) : (
-                                        <span></span>
+                                        <tr></tr>
                                       )}
                                       <NewAction
                                         {...this.props}

@@ -76,11 +76,8 @@ class UpdateGoal extends Component {
     GOAL_SERVICE.deleteGoal(goalId)
       .then((responseFromServer) => {
         this.props.history.push("/app");
-        console.log(1);
         this.props.syncUser(responseFromServer.data);
-        console.log(2);
         this.props.syncUpdate();
-        console.log(3);
         this.props.isDone(true);
       })
       .catch((err) => {

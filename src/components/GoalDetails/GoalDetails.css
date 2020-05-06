@@ -68,8 +68,11 @@
   align-items: center;
 }
 
-th,
-td {
-  vertical-align: center;
+.table th,
+.table td {
   text-align: center;
+}
+
+#text-center-align {
+  vertical-align: middle !important;
 }
