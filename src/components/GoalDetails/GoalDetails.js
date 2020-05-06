@@ -35,6 +35,7 @@ class GoalDetails extends Component {
     toggleGoalDetail: false,
     isGoalFormVisible: false,
     isActionFormVisible: false,
+    isActionUpdateVisible: false,
   };
 
   componentWillMount = () => {
