@@ -175,6 +175,20 @@ class GoalDetails extends Component {
       });
   };
 
+  toggleActionUpdateFormOn = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      isActionUpdateVisible: true,
+    }));
+  };
+
+  toggleActionUpdateFormOff = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      isActionUpdateVisible: false,
+    }));
+  };
+
   render() {
     const {
       goalName,
@@ -182,6 +196,7 @@ class GoalDetails extends Component {
       goalDueDate,
       toggleGoalDetail,
       isActionFormVisible,
+      isActionUpdateVisible,
     } = this.state;
     return (
       <AuthContext.Consumer>
@@ -278,6 +293,17 @@ class GoalDetails extends Component {
                                                   actionData={action}
                                                   syncUpdate={isUserLoggedIn}
                                                   syncUser={syncUser}
+                                                  isUpdating={
+                                                    isActionUpdateVisible
+                                                  }
+                                                  toggleUpdateFormOn={
+                                                    this
+                                                      .toggleActionUpdateFormOn
+                                                  }
+                                                  toggleUpdateFormOff={
+                                                    this
+                                                      .toggleActionUpdateFormOff
+                                                  }
                                                   checkAction={() =>
                                                     this.actionCheck(
                                                       action._id,

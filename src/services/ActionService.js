@@ -15,6 +15,17 @@ const ACTION_SERVICE = {
   actionCheck(goalId, actionId) {
     return service.post(`/app/${goalId}/${actionId}/is-done`);
   },
+
+  updateAction(goalId, actionId, updatedActionData) {
+    return service.post(
+      `/app/${goalId}/${actionId}/is-done`,
+      updatedActionData
+    );
+  },
+
+  deleteAction(goalId, actionId) {
+    return service.post(`/app/${goalId}/${actionId}/delete`);
+  },
 };
 
 export default ACTION_SERVICE;
