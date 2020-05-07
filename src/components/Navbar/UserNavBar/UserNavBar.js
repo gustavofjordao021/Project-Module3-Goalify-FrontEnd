@@ -87,7 +87,10 @@ class UserNavBar extends Component {
                     {isUserLoggedIn ? (
                       <>
                         <NavItem className="mr-3">
-                          <Link to={"/app"} className="hello-user text-muted">
+                          <Link
+                            to={"/app/user-profile"}
+                            className="hello-user text-muted"
+                          >
                             Welcome,
                             <span>
                               <img
@@ -105,7 +108,7 @@ class UserNavBar extends Component {
                     )}
 
                     <NavItem>
-                      <Link to={"/app"}>
+                      <Link to={"/app/user-profile"}>
                         <Button color="default" type="button">
                           Profile
                         </Button>

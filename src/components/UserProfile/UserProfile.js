@@ -8,27 +8,11 @@ import NewGoal from "../NewGoal/NewGoal";
 
 import "./UserProfile.css";
 
-import { Row, Col, Card, Button } from "reactstrap";
+import { Row, Col, Card, Button, CardHeader, CardBody } from "reactstrap";
 
 class UserProfile extends Component {
   state = {
     isGoalFormVisible: false,
-  };
-
-  updateGoals = (key) => {};
-
-  toggleGoalFormOn = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      isGoalFormVisible: true,
-    }));
-  };
-
-  toggleGoalFormOff = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      isGoalFormVisible: false,
-    }));
   };
 
   render() {
@@ -51,26 +35,54 @@ class UserProfile extends Component {
                     />
                     <Col className="col-8 mt-4 mr-4">
                       <Card className="fixed-height bg-secondary shadow main-container">
-                        {this.state.isGoalFormVisible ? (
-                          <NewGoal isDone={this.toggleGoalFormOff} />
-                        ) : (
-                          <>
-                            <span className="text-center m-4">
-                              <p className="text-muted card-text">
-                                Select a goal on the left, or click below to
-                                create a new goal
-                              </p>
-                              <Button
-                                id="secondary-goal-add"
-                                color="secondary"
-                                className="align-items-center title"
-                                onClick={() => this.toggleGoalFormOn()}
+                        <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                          <div className="d-flex justify-content-between">
+                            <div className="card-profile-image">
+                              <a
+                                href="#pablo"
+                                onClick={(e) => e.preventDefault()}
                               >
-                                <span id="main-cta">Add New Goal</span>
-                              </Button>
-                            </span>
-                          </>
-                        )}
+                                <img
+                                  alt="..."
+                                  className="rounded-circle"
+                                  src={currentUser.avatar}
+                                />
+                              </a>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        <CardBody className="pt-0 pt-md-4">
+                          <div className="text-center">
+                            <h3>
+                              Jessica Jones
+                              <span className="font-weight-light">, 27</span>
+                            </h3>
+                            <div className="h5 font-weight-300">
+                              <i className="ni location_pin mr-2" />
+                              Bucharest, Romania
+                            </div>
+                            <div className="h5 mt-4">
+                              <i className="ni business_briefcase-24 mr-2" />
+                              Solution Manager - Creative Tim Officer
+                            </div>
+                            <div>
+                              <i className="ni education_hat mr-2" />
+                              University of Computer Science
+                            </div>
+                            <hr className="my-4" />
+                            <p>
+                              Ryan — the name taken by Melbourne-raised,
+                              Brooklyn-based Nick Murphy — writes, performs and
+                              records all of his own music.
+                            </p>
+                            <a
+                              href="#pablo"
+                              onClick={(e) => e.preventDefault()}
+                            >
+                              Show more
+                            </a>
+                          </div>
+                        </CardBody>
                       </Card>
                     </Col>
                   </Row>
