@@ -58,6 +58,25 @@ class ActionLine extends Component {
       });
   };
 
+  handleActionDelete = (syncUser, syncUpdate) => {
+    const { goalId } = this.props.match.params;
+    const { actionId } = this.state;
+    ACTION_SERVICE.deleteAction(goalId, actionId)
+      .then((responseFromServer) => {
+        syncUser(responseFromServer.data);
+        syncUpdate();
+        this.props.toggleUpdateFormOff();
+      })
+      .catch((err) => {
+        if (err.response && err.response.data) {
+          this.setState((prevState) => ({
+            ...prevState,
+            errorMessage: err.response.data.message,
+          }));
+        }
+      });
+  };
+
   render() {
     const {
       actionName,
@@ -169,7 +188,9 @@ class ActionLine extends Component {
                     <Button
                       color="danger"
                       className="btn-inner--icon"
-                      type="submit"
+                      onClick={() =>
+                        this.handleActionDelete(syncUser, isUserLoggedIn)
+                      }
                     >
                       <i className="ni ni-fat-delete" />
                     </Button>
