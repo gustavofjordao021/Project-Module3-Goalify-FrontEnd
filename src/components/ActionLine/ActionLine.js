@@ -11,6 +11,7 @@ class ActionLine extends Component {
   state = {
     actionName: this.props.actionData.actionName,
     actionDescription: this.props.actionData.actionName,
+    actionId: this.props.actionId,
   };
 
   onChangeHandler = (event) => {
@@ -18,15 +19,17 @@ class ActionLine extends Component {
     this.setState({ [name]: value });
   };
 
-  handleActionUpdateSubmit = (e, cb, actionOwner) => {
-    const { goalId } = this.props.updateGoalId;
+  handleActionUpdateSubmit = (e, syncUser, syncUpdate, actionOwner) => {
     e.preventDefault();
-    ACTION_SERVICE.updateAction(goalId, {
-      actionData: { ...this.state, actionOwner },
+    const { goalId } = this.props.match.params;
+    const { actionId } = this.state;
+    ACTION_SERVICE.updateAction(goalId, actionId, {
+      ...this.state,
+      actionOwner,
     })
       .then((responseFromServer) => {
         const { updatedUser } = responseFromServer.data;
-        cb(updatedUser);
+        syncUser(updatedUser);
         const {
           data: { errorMessage, successMessage },
         } = responseFromServer;
@@ -40,9 +43,9 @@ class ActionLine extends Component {
             actionDescription: this.props.actionData.actionDescription,
             successMessage,
           });
-          this.props.syncUser(updatedUser);
-          this.props.syncUpdate();
-          this.props.isDone();
+          syncUser(updatedUser);
+          syncUpdate();
+          this.props.toggleUpdateFormOff();
         }
       })
       .catch((err) => {
@@ -124,30 +127,26 @@ class ActionLine extends Component {
                   </div>
                 </td>
                 <td>
-                  <Form onSubmit={(e) => this.handleActionUpdateSubmit(e)}>
-                    <InputGroup>
-                      <Input
-                        id="actionName"
-                        name="actionName"
-                        type="text"
-                        value={this.state.actionName}
-                        onChange={this.onChangeHandler}
-                      ></Input>
-                    </InputGroup>
-                  </Form>
+                  <InputGroup>
+                    <Input
+                      id="actionName"
+                      name="actionName"
+                      type="text"
+                      value={this.state.actionName}
+                      onChange={this.onChangeHandler}
+                    ></Input>
+                  </InputGroup>
                 </td>
                 <td>
-                  <Form onSubmit={(e) => this.handleActionUpdateSubmit(e)}>
-                    <InputGroup>
-                      <Input
-                        id="actionDescription"
-                        name="actionDescription"
-                        type="text"
-                        value={this.state.actionDescription}
-                        onChange={this.onChangeHandler}
-                      ></Input>
-                    </InputGroup>
-                  </Form>
+                  <InputGroup>
+                    <Input
+                      id="actionDescription"
+                      name="actionDescription"
+                      type="text"
+                      value={this.state.actionDescription}
+                      onChange={this.onChangeHandler}
+                    ></Input>
+                  </InputGroup>
                 </td>
                 <td>
                   <Form
@@ -155,14 +154,23 @@ class ActionLine extends Component {
                       this.handleActionUpdateSubmit(
                         e,
                         syncUser,
+                        isUserLoggedIn,
                         currentUser._id
                       )
                     }
                   >
-                    <Button color="primary" className="btn-inner--icon">
+                    <Button
+                      color="primary"
+                      className="btn-inner--icon"
+                      type="submit"
+                    >
                       <i className="ni ni-check-bold" />
                     </Button>
-                    <Button color="danger" className="btn-inner--icon">
+                    <Button
+                      color="danger"
+                      className="btn-inner--icon"
+                      type="submit"
+                    >
                       <i className="ni ni-fat-delete" />
                     </Button>
                     <Button
@@ -185,7 +193,7 @@ class ActionLine extends Component {
                       className="custom-control-input"
                       id={_id}
                       type="checkbox"
-                      onClick={() => {
+                      onSubmit={() => {
                         checkAction(_id, syncUser, isUserLoggedIn);
                       }}
                     />

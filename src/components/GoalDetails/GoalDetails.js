@@ -290,9 +290,9 @@ class GoalDetails extends Component {
                                             return (
                                               <>
                                                 <ActionLine
+                                                  {...this.props}
+                                                  actionId={action._id}
                                                   actionData={action}
-                                                  syncUpdate={isUserLoggedIn}
-                                                  syncUser={syncUser}
                                                   isUpdating={
                                                     isActionUpdateVisible
                                                   }

@@ -17,10 +17,7 @@ const ACTION_SERVICE = {
   },
 
   updateAction(goalId, actionId, updatedActionData) {
-    return service.post(
-      `/app/${goalId}/${actionId}/is-done`,
-      updatedActionData
-    );
+    return service.post(`/app/${goalId}/${actionId}/update`, updatedActionData);
   },
 
   deleteAction(goalId, actionId) {
