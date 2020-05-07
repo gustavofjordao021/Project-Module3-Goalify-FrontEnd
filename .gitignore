@@ -2,5 +2,4 @@
 node_modules
 
 # Environment Variables should NEVER be published
-.env.production
 .env.development
