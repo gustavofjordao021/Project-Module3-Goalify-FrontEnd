@@ -26,7 +26,8 @@ class UserNavBar extends Component {
     return (
       <AuthContext.Consumer>
         {(context) => {
-          const { userLogOut } = context;
+          const { userLogOut, isUserLoggedIn } = context;
+          const { currentUser } = context.state;
           return (
             <Navbar
               className="navbar-horizontal navbar-dark bg-primary"
@@ -58,7 +59,7 @@ class UserNavBar extends Component {
                   <div className="navbar-collapse-header">
                     <Row>
                       <Col className="collapse-brand" xs="6">
-                        <Link to="/">
+                        <Link to="/app">
                           <img
                             alt="reversed logo"
                             src={require("../../../assets/img/brand/logo-goalify.svg")}
@@ -83,24 +84,32 @@ class UserNavBar extends Component {
                     </Row>
                   </div>
                   <Nav className="ml-lg-auto" navbar>
+                    {isUserLoggedIn ? (
+                      <>
+                        <NavItem className="mr-3">
+                          <Link to={"/app"} className="hello-user text-muted">
+                            Welcome,
+                            <span>
+                              <img
+                                src={currentUser.avatar}
+                                className="avatar-sm rounded-circle m-2"
+                                alt="user-logo"
+                              />
+                            </span>
+                            <b>{currentUser.username}</b>
+                          </Link>
+                        </NavItem>
+                      </>
+                    ) : (
+                      <span></span>
+                    )}
+
                     <NavItem>
-                      <NavLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        Welcome back, <b>UserName</b>
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <Button
-                        color="default"
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                        }}
-                      >
-                        Profile
-                      </Button>
+                      <Link to={"/app"}>
+                        <Button color="default" type="button">
+                          Profile
+                        </Button>
+                      </Link>
                     </NavItem>
                     <UncontrolledDropdown nav>
                       <NavLink role="button">

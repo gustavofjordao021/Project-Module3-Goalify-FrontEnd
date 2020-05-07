@@ -9,6 +9,7 @@ import Signup from "./components/Signup/Signup";
 import Footer from "./components/Footer/Footer";
 import ApplicationHome from "./components/ApplicationHome/ApplicationHome";
 import GoalDetails from "./components/GoalDetails/GoalDetails";
+import UserProfile from "./components/UserProfile/UserProfile";
 import { AuthContext } from "./context";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/app" component={ApplicationHome} />
         <Route exact path="/app/goal-details/:goalId" component={GoalDetails} />
+        <Route exact path="/app/user-profile" component={UserProfile} />
       </Switch>
       <footer>
         <Footer />

@@ -5,3 +5,12 @@
 .navbar-nav {
   align-items: center !important;
 }
+
+.hello-user {
+  color: white !important;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+  box-shadow: 0 0px 5px 1px rgba(255, 255, 255, 0.15);
+}

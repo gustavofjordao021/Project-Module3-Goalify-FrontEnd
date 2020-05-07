@@ -1,0 +1,84 @@
+/* Classes */
+.app-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+}
+
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+  overflow-y: scroll;
+}
+
+.fixed-height {
+  height: 75vh;
+}
+
+.column-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.title {
+  color: #5e72e4;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.toggling-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.card-text {
+  font-size: 24px;
+}
+
+.input-label {
+  display: flex;
+  justify-content: center;
+  width: 100px;
+  color: #fff;
+  background-color: #5e72e4;
+  border-color: #5e72e4;
+}
+
+.goal-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+/* IDs */
+#icon {
+  width: 25px;
+  transform: rotate(90deg);
+}
+
+#secondary-goal-add:hover {
+  color: #5e72e4;
+}
+
+#goal-list {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+}
