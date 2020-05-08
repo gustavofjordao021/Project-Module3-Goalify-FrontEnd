@@ -18,7 +18,7 @@ class Login extends React.Component {
               <Col xl="6">
                 <div className="copyright text-xl-right text-muted pl-4 text-size">
                   <b>
-                    Designed and Developed with{" "}
+                    Made with{" "}
                     <span id="main-cta goal-list" role="img" aria-label="love">
                       💙
                     </span>{" "}
