@@ -18,12 +18,15 @@ class Login extends React.Component {
               <Col xl="6">
                 <div className="copyright text-xl-right text-muted pl-4 text-size">
                   <b>
-                    Made with{" "}
+                    Designed and Developed with{" "}
                     <span id="main-cta goal-list" role="img" aria-label="love">
                       💙
                     </span>{" "}
                   </b>
-                  by Gustavo Jordão at Ironhack Miami
+                  by Gustavo Jordão at{" "}
+                  <a href="https://www.ironhack.com/en/web-development/miami">
+                    Ironhack Miami
+                  </a>
                 </div>
               </Col>
             </Row>

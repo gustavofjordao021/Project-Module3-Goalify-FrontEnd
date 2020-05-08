@@ -25,7 +25,7 @@ class Home extends Component {
                   <Container className="home-container">
                     <Row>
                       <Col className="mt-4 ml-3 mr-4 mb-4">
-                        <Card>
+                        <Card className="shadow">
                           <h1 id="hero-title" className="ml-4 mt-4 mb-0">
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit.

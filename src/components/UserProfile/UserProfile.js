@@ -4,11 +4,10 @@ import { AuthContext } from "../../context/index";
 
 import UserNavBar from "../Navbar/UserNavBar/UserNavBar";
 import GoalSlider from "../GoalSlider/GoalSlider";
-import NewGoal from "../NewGoal/NewGoal";
 
 import "./UserProfile.css";
 
-import { Row, Col, Card, Button, CardHeader, CardBody } from "reactstrap";
+import { Row, Col, Card, CardHeader, CardBody } from "reactstrap";
 
 class UserProfile extends Component {
   state = {
