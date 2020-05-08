@@ -55,7 +55,7 @@ const Signup = () => {
                         />
                       </div>
                     </CardHeader>
-                    <CardBody className="px-lg-5 py-lg-5">
+                    <CardBody className="px-lg-5 py-lg-3">
                       <div className="text-center text-muted mb-4">
                         <p>Sign up below</p>
                       </div>
@@ -135,7 +135,7 @@ const Signup = () => {
                             </p>
                           </InputGroup>
                         </FormGroup>
-                        <Row className="my-4">
+                        <Row className="my-1">
                           <Col xs="12">
                             <div className="custom-control custom-control-alternative custom-checkbox">
                               <input
@@ -167,12 +167,11 @@ const Signup = () => {
                         ) : (
                           <span></span>
                         )}
-                        <div className="text-center">
-                          <Button
-                            className="mt-4"
-                            color="primary"
-                            type="submit"
-                          >
+                        <div
+                          className="text-center mt-4 mb-3"
+                          id="signup-container"
+                        >
+                          <Button color="primary" type="submit">
                             Create account
                           </Button>
                         </div>
