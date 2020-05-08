@@ -10,6 +10,7 @@ class AuthProvider extends React.Component {
       username: "",
       email: "",
       password: "",
+      avatar: "",
     },
     formLogin: {
       username: "",
@@ -18,6 +19,8 @@ class AuthProvider extends React.Component {
     currentUser: "",
     errorMessage: "",
     successMessage: "",
+    avatarUploaded: false,
+    avatarFileName: "",
     isLoggedIn:
       this.currentUser === ""
         ? false
@@ -73,6 +76,29 @@ class AuthProvider extends React.Component {
     }));
   };
 
+  handleAvatarUpload = (e) => {
+    e.persist();
+    const uploadData = new FormData();
+    uploadData.append("avatar", e.target.files[0]);
+    AUTH_SERVICE.uploadAvatar(uploadData)
+      .then((responseFromServer) => {
+        console.log(responseFromServer.data.secure_url);
+        this.setState((prevState) => ({
+          ...prevState,
+          formSignup: {
+            username: prevState.formSignup.username,
+            email: prevState.formSignup.email,
+            password: prevState.formSignup.password,
+            avatar: responseFromServer.data.secure_url,
+          },
+          avatarFileName: e.target.files[0].name,
+          avatarUploaded: true,
+        }));
+        console.log(this.state);
+      })
+      .catch();
+  };
+
   handleSignupSubmit = (e) => {
     e.preventDefault();
     AUTH_SERVICE.signup(this.state.formSignup)
@@ -83,7 +109,7 @@ class AuthProvider extends React.Component {
         if (errorMessage) {
           this.setState((prevState) => ({
             ...prevState,
-            formLogin: {
+            formSignup: {
               username: prevState.formSignup.username,
               email: prevState.formSignup.email,
               password: "",
@@ -101,7 +127,9 @@ class AuthProvider extends React.Component {
             errorMessage: "",
             successMessage,
             currentUser: user,
+            avatarFileName: "",
             isLoggedIn: true,
+            avatarUploaded: false,
           }));
           this.props.history.push("/app");
         }
@@ -177,6 +205,7 @@ class AuthProvider extends React.Component {
       isUserLoggedIn,
       syncUser,
       userLogOut,
+      handleAvatarUpload,
     } = this;
     return (
       <>
@@ -190,6 +219,7 @@ class AuthProvider extends React.Component {
             isUserLoggedIn,
             syncUser,
             userLogOut,
+            handleAvatarUpload,
           }}
         >
           {this.props.children}

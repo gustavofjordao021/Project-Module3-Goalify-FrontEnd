@@ -28,13 +28,19 @@ const Signup = () => {
     <AuthContext.Consumer>
       {(context) => {
         const {
-          formSignup: { username, email, password },
+          formSignup: { username, email, password, avatar },
           errorMessage,
           successMessage,
           isLoggedIn,
+          avatarUploaded,
+          avatarFileName,
         } = context.state;
 
-        const { handleSignupInput, handleSignupSubmit } = context;
+        const {
+          handleSignupInput,
+          handleSignupSubmit,
+          handleAvatarUpload,
+        } = context;
         return (
           <>
             {isLoggedIn ? (
@@ -114,27 +120,53 @@ const Signup = () => {
                             />
                           </InputGroup>
                         </FormGroup>
-                        <FormGroup>
-                          <InputGroup className="input-group-alternative display-flex">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText className="input-group-text custom-spacing">
-                                <i className="ni ni-cloud-upload-96" />
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              id="avatar"
-                              name="avatar"
-                              type="file"
-                              className="custom-file-input"
-                              value={password}
-                              placeholder="Avatar"
-                              onChange={handleSignupInput}
-                            ></Input>
-                            <p className="text-muted input-text">
-                              Select Avatar file
-                            </p>
-                          </InputGroup>
-                        </FormGroup>
+                        {!avatarUploaded ? (
+                          <>
+                            <FormGroup>
+                              <InputGroup className="input-group-alternative display-flex">
+                                <InputGroupAddon addonType="prepend">
+                                  <InputGroupText className="input-group-text custom-spacing">
+                                    <i className="ni ni-cloud-upload-96" />
+                                  </InputGroupText>
+                                </InputGroupAddon>
+                                <Input
+                                  id="avatar"
+                                  name="avatar"
+                                  type="file"
+                                  className="custom-file-input"
+                                  placeholder="avatar"
+                                  onChange={(e) => handleAvatarUpload(e)}
+                                ></Input>
+                                <p className="text-muted input-text">
+                                  Select Avatar file
+                                </p>
+                              </InputGroup>
+                            </FormGroup>
+                          </>
+                        ) : (
+                          <>
+                            <FormGroup>
+                              <InputGroup className="input-group-alternative display-flex">
+                                <InputGroupAddon addonType="prepend">
+                                  <InputGroupText className="input-group-text custom-spacing">
+                                    <i className="ni ni-cloud-upload-96" />
+                                  </InputGroupText>
+                                </InputGroupAddon>
+                                <Input
+                                  id="avatar"
+                                  name="avatar"
+                                  type="file"
+                                  className="custom-file-input"
+                                  placeholder="avatar"
+                                  onChange={(e) => handleAvatarUpload(e)}
+                                ></Input>
+                                <p className="text-muted input-text">
+                                  {avatarFileName}
+                                </p>
+                              </InputGroup>
+                            </FormGroup>
+                          </>
+                        )}
                         <Row className="my-1">
                           <Col xs="12">
                             <div className="custom-control custom-control-alternative custom-checkbox">

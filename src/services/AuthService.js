@@ -23,6 +23,10 @@ const AUTH_SERVICE = {
   getUser() {
     return service.get("/auth/isLoggedIn");
   },
+
+  uploadAvatar(avatar) {
+    return service.post("/auth/avatar-upload", avatar);
+  },
 };
 
 export default AUTH_SERVICE;
