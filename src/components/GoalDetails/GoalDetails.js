@@ -7,6 +7,7 @@ import GoalSlider from "../GoalSlider/GoalSlider";
 import NewGoal from "../NewGoal/NewGoal";
 import NewAction from "../NewAction/NewAction";
 import ActionLine from "../ActionLine/ActionLine";
+import ProgressBar from "../ProgressBar/ProgressBar";
 
 import { AuthContext } from "../../context/index";
 import GOAL_SERVICE from "../../services/GoalService";
@@ -287,6 +288,10 @@ class GoalDetails extends Component {
                                       <i className="ni ni-compass-04 mr-3" />{" "}
                                       {goalTarget}
                                     </p>
+                                    <ProgressBar
+                                      userData={currentUser}
+                                      {...this.props}
+                                    />
                                   </div>
                                 </div>
                               ) : (

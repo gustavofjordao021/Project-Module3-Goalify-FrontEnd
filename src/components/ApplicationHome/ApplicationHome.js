@@ -15,6 +15,10 @@ class ApplicationHome extends Component {
     isGoalFormVisible: false,
   };
 
+  componentDidMount = () => {
+    new Notification("Hi there!");
+  };
+
   toggleGoalFormOn = () => {
     this.setState((prevState) => ({
       ...prevState,
