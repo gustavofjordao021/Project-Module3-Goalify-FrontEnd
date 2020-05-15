@@ -34,14 +34,14 @@ class UserNavBar extends Component {
               expand="lg"
             >
               <Container>
-                <NavbarBrand href="/app" className="navbar-nav">
-                  {" "}
-                  <img
-                    alt="reversed logo"
-                    src={require("../../../assets/img/brand/logo-goalify-reverse.svg")}
-                    className="mr-2"
-                  ></img>
-                  Goalify
+                <NavbarBrand className="navbar-nav">
+                  <Link to="/app">
+                    <img
+                      alt="reversed logo"
+                      src={require("../../../assets/img/brand/logo-goalify.svg")}
+                    />
+                    Goalify
+                  </Link>{" "}
                 </NavbarBrand>
                 <button
                   aria-controls="navbar-primary"
