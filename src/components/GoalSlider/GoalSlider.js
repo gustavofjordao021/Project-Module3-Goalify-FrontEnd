@@ -43,7 +43,6 @@ const GoalSlider = (props) => {
                         to={`/app/goal-details/${_id}`}
                         key={index}
                         className="btn btn-link m-1"
-                        onClick={(e) => passedDownGoalSelector(_id)}
                       >
                         <span
                           id="main-cta goal-list"

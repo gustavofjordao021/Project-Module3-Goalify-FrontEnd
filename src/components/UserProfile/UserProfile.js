@@ -14,6 +14,20 @@ class UserProfile extends Component {
     isGoalFormVisible: false,
   };
 
+  toggleGoalFormOn = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      isGoalFormVisible: true,
+    }));
+  };
+
+  toggleGoalFormOff = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      isGoalFormVisible: false,
+    }));
+  };
+
   render() {
     return (
       <AuthContext.Consumer>
@@ -30,7 +44,6 @@ class UserProfile extends Component {
                     <GoalSlider
                       userLoggedIn={currentUser}
                       passedDownToggleGoalForm={() => this.toggleGoalFormOn()}
-                      passedDownGoalSelector={(key) => this.updateGoals(key)}
                     />
                     <Col className="col-8 mt-4 mr-4">
                       <Card className="fixed-height bg-secondary shadow main-container">
