@@ -25,6 +25,7 @@ import {
 } from "reactstrap";
 
 class GoalDetails extends Component {
+  _isMounted = false;
   state = {
     goalName: "",
     goalDueDate: 0,
@@ -38,21 +39,24 @@ class GoalDetails extends Component {
     isActionUpdateVisible: false,
   };
 
-  componentWillMount = () => {
+  componentDidMount = () => {
+    this._isMounted = true;
     GOAL_SERVICE.retrieveGoals()
-      .then((responseFromServer) => {
+      .then(async (responseFromServer) => {
         const goalId = this.props.match.params;
         let selectedGoal = responseFromServer.data.filter(
           (eachGoal) => eachGoal._id === goalId.goalId
         )[0];
         const correctDate = selectedGoal.goalDueDate.substring(0, 10);
-        this.setState((prevState) => ({
-          ...prevState,
-          userGoals: responseFromServer.data,
-          goalName: selectedGoal.goalName,
-          goalDueDate: correctDate,
-          goalTarget: selectedGoal.goalTarget,
-        }));
+        if (this._isMounted) {
+          this.setState((prevState) => ({
+            ...prevState,
+            userGoals: responseFromServer.data,
+            goalName: selectedGoal.goalName,
+            goalDueDate: correctDate,
+            goalTarget: selectedGoal.goalTarget,
+          }));
+        }
       })
       .catch((errorMessage) => console.log(errorMessage));
   };
@@ -65,6 +69,10 @@ class GoalDetails extends Component {
       goalDueDate: goal.goalDueDate.substring(0, 10),
       goalTarget: goal.goalTarget,
     }));
+  };
+
+  componentWillUnmount = () => {
+    this._isMounted = false;
   };
 
   toggleGoalFormOn = () => {
@@ -145,6 +153,39 @@ class GoalDetails extends Component {
   actionCheck = (actionId, syncUser, syncUpdate) => {
     const goalId = this.props.match.params.goalId;
     ACTION_SERVICE.actionCheck(goalId, actionId)
+      .then((responseFromServer) => {
+        const { updatedUser } = responseFromServer.data;
+        syncUser(updatedUser);
+        const {
+          data: { errorMessage, successMessage },
+        } = responseFromServer;
+        if (errorMessage) {
+          this.setState({
+            errorMessage,
+            displayForm: this.props.isShown,
+          });
+        } else {
+          this.setState({
+            successMessage,
+            displayForm: false,
+          });
+          syncUser(updatedUser);
+          syncUpdate();
+        }
+      })
+      .catch((err) => {
+        if (err.response && err.response.data) {
+          this.setState((prevState) => ({
+            ...prevState,
+            errorMessage: err.response.data.message,
+          }));
+        }
+      });
+  };
+
+  actionUncheck = (actionId, syncUser, syncUpdate) => {
+    const goalId = this.props.match.params.goalId;
+    ACTION_SERVICE.actionUncheck(goalId, actionId)
       .then((responseFromServer) => {
         const { updatedUser } = responseFromServer.data;
         syncUser(updatedUser);
@@ -311,6 +352,13 @@ class GoalDetails extends Component {
                                                       isLoggedIn
                                                     )
                                                   }
+                                                  uncheckAction={() =>
+                                                    this.actionUncheck(
+                                                      action._id,
+                                                      syncUser,
+                                                      isLoggedIn
+                                                    )
+                                                  }
                                                 />
                                               </>
                                             );
@@ -347,7 +395,7 @@ class GoalDetails extends Component {
                                           </tr>
                                         </>
                                       ) : (
-                                        <span></span>
+                                        <td key={"id"}></td>
                                       )}
                                       {currentUser.goals.filter(
                                         (goals) =>

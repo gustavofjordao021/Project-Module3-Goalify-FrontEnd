@@ -11,7 +11,6 @@ import {
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
-  NavbarBrand,
   Navbar,
   NavItem,
   NavLink,
@@ -34,15 +33,18 @@ class UserNavBar extends Component {
               expand="lg"
             >
               <Container>
-                <NavbarBrand className="navbar-nav">
-                  <Link to="/app">
+                <Link to="/app" className="navbar-nav navbar-brand">
+                  <div className="center-logo">
                     <img
                       alt="reversed logo"
-                      src={require("../../../assets/img/brand/logo-goalify.svg")}
-                    />
-                    Goalify
-                  </Link>{" "}
-                </NavbarBrand>
+                      src={require("../../../assets/img/brand/logo-goalify-reverse.svg")}
+                      className="mr-2"
+                    />{" "}
+                    <span className="hello-user" id="center-logo">
+                      Goalify
+                    </span>
+                  </div>
+                </Link>
                 <button
                   aria-controls="navbar-primary"
                   aria-expanded={false}

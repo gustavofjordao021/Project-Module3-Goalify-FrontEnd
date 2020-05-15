@@ -28,7 +28,7 @@ const Signup = () => {
     <AuthContext.Consumer>
       {(context) => {
         const {
-          formSignup: { username, email, password, avatar },
+          formSignup: { username, email, password },
           errorMessage,
           successMessage,
           isLoggedIn,

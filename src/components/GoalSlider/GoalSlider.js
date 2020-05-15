@@ -12,11 +12,7 @@ import {
 } from "reactstrap";
 
 const GoalSlider = (props) => {
-  const {
-    userLoggedIn,
-    passedDownGoalSelector,
-    passedDownToggleGoalForm,
-  } = props;
+  const { userLoggedIn, passedDownToggleGoalForm } = props;
 
   return (
     <>

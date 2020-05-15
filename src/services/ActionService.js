@@ -16,6 +16,10 @@ const ACTION_SERVICE = {
     return service.post(`/app/${goalId}/${actionId}/is-done`);
   },
 
+  actionUncheck(goalId, actionId) {
+    return service.post(`/app/${goalId}/${actionId}/not-done`);
+  },
+
   updateAction(goalId, actionId, updatedActionData) {
     return service.post(`/app/${goalId}/${actionId}/update`, updatedActionData);
   },

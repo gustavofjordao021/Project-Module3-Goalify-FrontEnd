@@ -81,11 +81,12 @@ class ActionLine extends Component {
     const {
       actionName,
       actionDescription,
-      _id,
       isDone,
+      _id,
     } = this.props.actionData;
     const {
       checkAction,
+      uncheckAction,
       isUpdating,
       toggleUpdateFormOn,
       toggleUpdateFormOff,
@@ -98,7 +99,7 @@ class ActionLine extends Component {
           if (isDone) {
             return (
               <tr key={_id} className="grayout">
-                <td>
+                <td key={_id}>
                   <div className="custom-control custom-control-alternative custom-checkbox mb-0">
                     <input
                       className="custom-control-input"
@@ -106,7 +107,7 @@ class ActionLine extends Component {
                       checked
                       type="checkbox"
                       onClick={() => {
-                        checkAction(_id, syncUser, isUserLoggedIn);
+                        uncheckAction(_id, syncUser, isUserLoggedIn);
                       }}
                     />
                     <label
@@ -214,7 +215,7 @@ class ActionLine extends Component {
                       className="custom-control-input"
                       id={_id}
                       type="checkbox"
-                      onSubmit={() => {
+                      onClick={() => {
                         checkAction(_id, syncUser, isUserLoggedIn);
                       }}
                     />
