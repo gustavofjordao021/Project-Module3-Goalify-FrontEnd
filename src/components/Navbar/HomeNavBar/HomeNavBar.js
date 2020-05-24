@@ -52,7 +52,6 @@ const HomeNavBar = () => {
             <Nav className="ml-auto" navbar>
               <NavItem>
                 <NavLink className="nav-link-icon" to="/signup" tag={Link}>
-                  <i className="ni ni-circle-08" />
                   <Button color="primary">Signup</Button>
                 </NavLink>
               </NavItem>

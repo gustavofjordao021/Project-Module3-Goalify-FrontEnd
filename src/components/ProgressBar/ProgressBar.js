@@ -9,13 +9,11 @@ class ProgressBar extends React.Component {
       (goals) => goals._id === this.props.match.params.goalId
     )[0];
     let totalActions = goal.goalActions.length;
-    let incompleteActions = goal.goalActions.filter(
-      (action) => action.isDone === false
-    ).length;
     let completeActions = goal.goalActions.filter(
       (action) => action.isDone === true
     ).length;
-    let progressStatus = (completeActions / totalActions) * 100;
+    let progressStatus =
+      totalActions > 0 ? (completeActions / totalActions) * 100 : "0";
     let barStatus = progressStatus === 100 ? "success" : "primary";
     return (
       <>

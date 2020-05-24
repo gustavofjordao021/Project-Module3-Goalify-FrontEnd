@@ -67,7 +67,7 @@ class NewAction extends Component {
             <>
               {isVisible ? (
                 <>
-                  <tr>
+                  <tr key={"newAction"}>
                     <td>
                       <span></span>
                     </td>
@@ -123,7 +123,7 @@ class NewAction extends Component {
                   </tr>
                 </>
               ) : (
-                <tr></tr>
+                <tr key={"emptyNewAction"}></tr>
               )}
             </>
           );

@@ -370,7 +370,7 @@ class GoalDetails extends Component {
                                           })
                                       ) : !isActionFormVisible ? (
                                         <>
-                                          <tr>
+                                          <tr key={"actionCTA"}>
                                             <td className="p-0" colSpan="4">
                                               {" "}
                                               <div className="text-center text-muted m-2">
@@ -400,7 +400,7 @@ class GoalDetails extends Component {
                                           </tr>
                                         </>
                                       ) : (
-                                        <td key={"id"}></td>
+                                        <tr key={"empty2"}></tr>
                                       )}
                                       {currentUser.goals.filter(
                                         (goals) =>
@@ -427,7 +427,7 @@ class GoalDetails extends Component {
                                           </td>
                                         </tr>
                                       ) : (
-                                        <tr></tr>
+                                        <tr key={"empty3"}></tr>
                                       )}
                                       <NewAction
                                         {...this.props}

@@ -78,12 +78,7 @@ class ActionLine extends Component {
   };
 
   render() {
-    const {
-      actionName,
-      actionDescription,
-      isDone,
-      _id,
-    } = this.props.actionData;
+    const { actionName, actionDescription, isDone } = this.props.actionData;
     const {
       checkAction,
       uncheckAction,
@@ -91,6 +86,7 @@ class ActionLine extends Component {
       toggleUpdateFormOn,
       toggleUpdateFormOff,
     } = this.props;
+    const { actionId } = this.state;
     return (
       <AuthContext.Consumer>
         {(context) => {
@@ -98,21 +94,21 @@ class ActionLine extends Component {
           const { currentUser } = context.state;
           if (isDone) {
             return (
-              <tr key={_id} className="grayout">
-                <td key={_id}>
+              <tr key={actionId} className="grayout">
+                <td>
                   <div className="custom-control custom-control-alternative custom-checkbox mb-0">
                     <input
                       className="custom-control-input"
-                      id={_id}
+                      id={actionId}
                       checked
                       type="checkbox"
                       onClick={() => {
-                        uncheckAction(_id, syncUser, isUserLoggedIn);
+                        uncheckAction(actionId, syncUser, isUserLoggedIn);
                       }}
                     />
                     <label
                       className="custom-control-label"
-                      htmlFor={_id}
+                      htmlFor={actionId}
                     ></label>
                   </div>
                 </td>
@@ -131,25 +127,24 @@ class ActionLine extends Component {
             );
           } else if (isUpdating) {
             return (
-              <>
+              <tr key={actionId}>
                 <td>
                   <div className="custom-control custom-control-alternative custom-checkbox mb-0">
                     <input
                       className="custom-control-input"
-                      id={_id}
+                      id={actionId}
                       disabled
                       type="checkbox"
                     />
                     <label
                       className="custom-control-label"
-                      htmlFor={_id}
+                      htmlFor={actionId}
                     ></label>
                   </div>
                 </td>
                 <td>
                   <InputGroup>
                     <Input
-                      id="actionName"
                       name="actionName"
                       type="text"
                       value={this.state.actionName}
@@ -160,7 +155,6 @@ class ActionLine extends Component {
                 <td>
                   <InputGroup>
                     <Input
-                      id="actionDescription"
                       name="actionDescription"
                       type="text"
                       value={this.state.actionDescription}
@@ -204,24 +198,24 @@ class ActionLine extends Component {
                     </Button>
                   </Form>
                 </td>
-              </>
+              </tr>
             );
           } else {
             return (
-              <tr key={_id}>
+              <tr key={actionId}>
                 <td>
                   <div className="custom-control custom-control-alternative custom-checkbox mb-0">
                     <input
                       className="custom-control-input"
-                      id={_id}
+                      id={actionId}
                       type="checkbox"
                       onClick={() => {
-                        checkAction(_id, syncUser, isUserLoggedIn);
+                        checkAction(actionId, syncUser, isUserLoggedIn);
                       }}
                     />
                     <label
                       className="custom-control-label"
-                      htmlFor={_id}
+                      htmlFor={actionId}
                     ></label>
                   </div>
                 </td>
