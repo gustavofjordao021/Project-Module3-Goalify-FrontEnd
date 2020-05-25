@@ -14,6 +14,12 @@ class ActionLine extends Component {
     actionId: this.props.actionId,
   };
 
+  onKeyPress(e) {
+    if (e.which === 13) {
+      e.preventDefault();
+    }
+  }
+
   onChangeHandler = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -172,6 +178,7 @@ class ActionLine extends Component {
                         currentUser._id
                       )
                     }
+                    onKeyPress={this.onKeyPress}
                   >
                     <Button
                       color="primary"

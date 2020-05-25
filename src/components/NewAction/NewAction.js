@@ -13,6 +13,12 @@ class NewAction extends Component {
     actionDescription: "",
   };
 
+  onKeyPress(e) {
+    if (e.which === 13) {
+      e.preventDefault();
+    }
+  }
+
   onChangeHandler = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -72,7 +78,10 @@ class NewAction extends Component {
                       <span></span>
                     </td>
                     <td>
-                      <Form onSubmit={(e) => this.handleActionSubmit(e)}>
+                      <Form
+                        onSubmit={(e) => this.handleActionSubmit(e)}
+                        onKeyPress={this.onKeyPress}
+                      >
                         <InputGroup>
                           <Input
                             id="actionName"
@@ -86,7 +95,10 @@ class NewAction extends Component {
                       </Form>
                     </td>
                     <td>
-                      <Form onSubmit={(e) => this.handleActionSubmit(e)}>
+                      <Form
+                        onSubmit={(e) => this.handleActionSubmit(e)}
+                        onKeyPress={this.onKeyPress}
+                      >
                         <InputGroup>
                           <Input
                             id="actionDescription"
@@ -104,6 +116,7 @@ class NewAction extends Component {
                         onSubmit={(e) =>
                           this.handleActionSubmit(e, syncUser, currentUser._id)
                         }
+                        onKeyPress={this.onKeyPress}
                       >
                         <Button color="primary" className="btn-inner--icon">
                           <i className="ni ni-check-bold" />

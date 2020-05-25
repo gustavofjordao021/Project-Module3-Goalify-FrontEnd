@@ -90,10 +90,9 @@ class newGoalForm extends Component {
                   <div className="text-center">
                     <h2 className="title">Add new goal</h2>
                     <p className="mb-0 text-muted">
-                      To create your new goal, please input it's name, a
-                      description that will help you focus on it, a target value
-                      (could be X books read, or % change in body weight), and a
-                      due date to make sure you follow-through.
+                      To create your new goal, please input its name, a target
+                      value (could be X books read, or % change in body weight),
+                      and a due date to make sure you follow-through.
                     </p>
                   </div>
                 </CardHeader>
