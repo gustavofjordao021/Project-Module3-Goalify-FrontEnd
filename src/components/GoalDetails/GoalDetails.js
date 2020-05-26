@@ -269,29 +269,42 @@ class GoalDetails extends Component {
                           >
                             <CardHeader className="bg-transparent brand-logo">
                               {!toggleGoalDetail ? (
-                                <div className="text-center details-container">
-                                  <div className="title-container mb-4">
-                                    <h2 className="title mr-3 mb-0">
-                                      {goalName}
-                                    </h2>
-                                    <i
-                                      className="ni ni-settings mr-3"
-                                      onClick={() => this.toggleGoalDetailsOn()}
-                                    />
+                                <div className="details-container">
+                                  <div className="title-container">
+                                    <div className="full-width">
+                                      <h1 className="title mr-3 mb-0">
+                                        {goalName}
+                                        <i
+                                          className="ni ni-settings mr-3 edit-icon"
+                                          onClick={() =>
+                                            this.toggleGoalDetailsOn()
+                                          }
+                                        />
+                                      </h1>
+                                    </div>
+                                    <div className="full-width">
+                                      <p className="m-0 pt-2 pb-2 pr-4">
+                                        <i className="ni ni-calendar-grid-58 mr-3" />{" "}
+                                        {goalDueDate}
+                                      </p>
+                                    </div>
+                                    <div className="full-width">
+                                      <p className="m-0 pt-2 pb-2 pr-4">
+                                        <i className="ni ni-compass-04 mr-3" />{" "}
+                                        {goalTarget}
+                                      </p>
+                                    </div>
                                   </div>
-                                  <div className="details-container">
-                                    <p className="m-0 pt-2 pb-2 pl-4 pr-4">
-                                      <i className="ni ni-calendar-grid-58 mr-3" />{" "}
-                                      {goalDueDate}
-                                    </p>
-                                    <p className="m-0 pt-2 pb-2 pl-4 pr-4">
-                                      <i className="ni ni-compass-04 mr-3" />{" "}
-                                      {goalTarget}
-                                    </p>
-                                    <ProgressBar
-                                      userData={currentUser}
-                                      {...this.props}
-                                    />
+                                  <div className="title-container">
+                                    <div>
+                                      <h1 className="text-muted">Progress</h1>
+                                      <ProgressBar
+                                        userData={currentUser}
+                                        {...this.props}
+                                      />
+                                    </div>
+                                    <div>Actions:</div>
+                                    <div>Completed:</div>
                                   </div>
                                 </div>
                               ) : (

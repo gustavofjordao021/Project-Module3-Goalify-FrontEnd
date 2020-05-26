@@ -3,6 +3,14 @@
   vertical-align: center !important;
 }
 
+.edit-icon {
+  width: 30px;
+}
+
+.full-width {
+  width: 100%;
+}
+
 .cancel-link {
   font-size: 0.875rem;
   font-weight: 800;
@@ -12,9 +20,10 @@
 .title-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 50%;
 }
 
 .title-container > i {
