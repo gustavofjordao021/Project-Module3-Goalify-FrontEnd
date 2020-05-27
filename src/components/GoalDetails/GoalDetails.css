@@ -77,6 +77,12 @@
   align-items: center;
 }
 
+.align-items-left {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
 .table th,
 .table td {
   text-align: center;

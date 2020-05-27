@@ -270,7 +270,7 @@ class GoalDetails extends Component {
                             <CardHeader className="bg-transparent brand-logo">
                               {!toggleGoalDetail ? (
                                 <div className="details-container">
-                                  <div className="title-container">
+                                  <div className="title-container pl-4">
                                     <div className="full-width">
                                       <h1 className="title mr-3 mb-0">
                                         {goalName}
@@ -296,15 +296,17 @@ class GoalDetails extends Component {
                                     </div>
                                   </div>
                                   <div className="title-container">
-                                    <div>
-                                      <h1 className="text-muted">Progress</h1>
-                                      <ProgressBar
-                                        userData={currentUser}
-                                        {...this.props}
-                                      />
+                                    <div className="full-width align-items-left">
+                                      <h1 className="text-muted">
+                                        Progress:{" "}
+                                        <ProgressBar
+                                          userData={currentUser}
+                                          {...this.props}
+                                        />
+                                      </h1>
                                     </div>
-                                    <div>Actions:</div>
-                                    <div>Completed:</div>
+                                    <div className="full-width">Actions:</div>
+                                    <div className="full-width">Completed:</div>
                                   </div>
                                 </div>
                               ) : (

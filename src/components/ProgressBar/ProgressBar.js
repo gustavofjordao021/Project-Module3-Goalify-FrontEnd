@@ -2,6 +2,8 @@ import React from "react";
 
 import { Progress } from "reactstrap";
 
+import "./ProgressBar.css";
+
 class ProgressBar extends React.Component {
   render() {
     const { userData } = this.props;
@@ -17,14 +19,12 @@ class ProgressBar extends React.Component {
     let barStatus = progressStatus === 100 ? "success" : "primary";
     return (
       <>
-        <div className="progress-wrapper">
-          <div className="progress-info">
-            <div className="progress-percentage">
-              <span>{progressStatus}%</span>
-            </div>
+        <div className="progress-info mb-0">
+          <div className="progress-percentage">
+            <span>{progressStatus}%</span>
           </div>
-          <Progress max="100" value={progressStatus} color={barStatus} />
         </div>
+        <Progress max="100" value={progressStatus} color={barStatus} />
       </>
     );
   }
