@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../../context/index";
 
+import "./ApplicationHome.css";
+
 import UserNavBar from "../Navbar/UserNavBar/UserNavBar";
 import GoalSlider from "../GoalSlider/GoalSlider";
 import NewGoal from "../NewGoal/NewGoal";
-
-import "./ApplicationHome.css";
 
 import { Row, Col, Card, Button } from "reactstrap";
 

@@ -19,9 +19,11 @@ class Home extends Component {
                 <Redirect to="/app" />
               ) : (
                 <>
-                  <header>
-                    <HomeNavBar />
-                  </header>
+                  <div>
+                    <header>
+                      <HomeNavBar />
+                    </header>
+                  </div>
                   <Container className="home-container">
                     <Row>
                       <Col className="mt-4 ml-3 mr-4 mb-4">
